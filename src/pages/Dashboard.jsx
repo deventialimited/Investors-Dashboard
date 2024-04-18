@@ -1,65 +1,89 @@
 import React from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import Chart from "react-apexcharts";
+import { AiOutlineDollarCircle } from "react-icons/ai";
+import { BsShop } from "react-icons/bs";
+import BarSection from "../components/BarSection";
+import ChartSection from "../components/ChartSection";
+import Details from "../components/Details";
 
 const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 `;
+const Section = styled.div`
+  width: 93%;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem 0rem;
+`;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 const Text = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  color: #171717;
+  font-size: 36px;
+  font-weight: 500;
+  color: #000000;
   font-family: "Poppins", sans-serif;
 `;
-const ChartSection = styled.div`
+const ButtonArea = styled.div`
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 1rem 0rem;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-  border-radius: 25px;
-  box-shadow: 0px 8px 17px 0px #0000001a;
+  gap: 1rem;
 `;
-const data = {
-  options: {
-    colors: ["#004d99"],
-    chart: {
-      id: "Trades",
-    },
-    xaxis: {
-      categories: [1, 2, 3, 4, 5, 6, 7],
-    },
-  },
-  series: [
-    {
-      name: "balance",
-      data: [19, 5, 35, 19, 55, 15, 68, 55],
-    },
-  ],
-};
+const Button = styled.div`
+  border: 1px solid #ee1d52;
+  border-radius: 15px;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ee1d52;
+  cursor: pointer;
+  &:hover {
+    background-color: #ee1d52;
+    color: white;
+    transition: all 0.3s ease-in-out;
+  }
+`;
+const IconOne = styled(AiOutlineDollarCircle)`
+  height: 25px;
+  width: 25px;
+`;
+const IconTwo = styled(BsShop)`
+  height: 25px;
+  width: 25px;
+`;
+const Span = styled.span``;
+
 const Dashboard = () => {
   return (
     <Container>
       <Navbar />
-      <Container>
-        <Text>Dashboard</Text>
-        <ChartSection>
-          <Chart
-            options={data.options}
-            series={data.series}
-            type="area"
-            width="500"
-          />
-        </ChartSection>
-      </Container>
+      <Section>
+        <Header>
+          <Text>Dashboard</Text>
+          <ButtonArea>
+            <Button>
+              <IconOne></IconOne>
+              <Span>Cash-In</Span>
+            </Button>
+            <Button>
+              <IconTwo></IconTwo>
+              <Span>Shop</Span>
+            </Button>
+          </ButtonArea>
+        </Header>
+        <BarSection />
+        <ChartSection />
+        <Details />
+      </Section>
     </Container>
   );
 };
