@@ -35,6 +35,11 @@ const Button = styled.a`
   padding: 8px 19px;
   border-radius: 15px;
   text-decoration: none;
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    background-color: #ee1d52;
+    color: white;
+  }
 `;
 const Text = styled.div`
   width: 95%;

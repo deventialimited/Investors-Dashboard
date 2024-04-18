@@ -6,6 +6,8 @@ import { BsShop } from "react-icons/bs";
 import BarSection from "../components/BarSection";
 import ChartSection from "../components/ChartSection";
 import Details from "../components/Details";
+import UserActivity from "../components/UserActivity";
+import TransactionHistory from "../components/TransactionHistory";
 
 const Container = styled.div`
   height: 100%;
@@ -13,7 +15,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 `;
 const Section = styled.div`
   width: 93%;
@@ -83,6 +85,8 @@ const Dashboard = () => {
         <BarSection />
         <ChartSection />
         <Details />
+        <UserActivity />
+        <TransactionHistory />
       </Section>
     </Container>
   );
