@@ -5,6 +5,7 @@ import { SectionData } from "../data";
 const Container = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
@@ -12,7 +13,7 @@ const Container = styled.div`
 const Section = styled.div`
   box-shadow: 0px 8px 17px 1px #002a5c33;
   padding: 5px;
-  width: calc(20%);
+  width: 210px;
   height: 144px;
   border-radius: 13px;
   display: flex;

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { FaChevronDown } from "react-icons/fa";
+
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
   height: 100vh;
@@ -50,12 +52,40 @@ const InputField = styled.input`
   padding-left: 15px;
   background: transparent;
 `;
-const Dropdown = styled.select`
-  border: none;
+const Dropdown = styled.div`
+  width: 100%;
+  color: #66666699;
+  position: relative;
 `;
-const DropdownLabel = styled.label`
-  font-size: 15px;
-  padding-left: 15px;
+const DropdownBtn = styled.div`
+  border: 1px solid #66666659;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const Icon = styled(FaChevronDown)``;
+
+const DropdownContent = styled.div`
+  position: absolute;
+  width: 100%;
+  box-shadow: 0px 0px 5px 0px grey;
+  border-radius: 10px;
+  border: 1px solid #66666659;
+  background-color: white;
+  padding: 5px 5px;
+
+  margin-top: 0.5rem;
+`;
+const DropdownItem = styled.div`
+  padding: 10px 20px;
+  cursor: pointer;
+  &:hover {
+    background: #f4f4f4;
+  }
 `;
 const Button = styled.a`
   display: flex;
@@ -83,6 +113,10 @@ const Button = styled.a`
 `;
 
 const register = () => {
+  const [isActive, setIsActive] = useState(false);
+  const handelDropdown = () => {
+    setIsActive(!isActive);
+  };
   return (
     <Container>
       <Section>
@@ -139,13 +173,16 @@ const register = () => {
           </Fields>
 
           <Fields>
-            <DropdownLabel htmlFor="country">
-              What is your country?
-            </DropdownLabel>
             <Dropdown>
-              <option value="Pakistan"> </option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>{" "}
+              <DropdownBtn onClick={handelDropdown}>
+                Select Method <Icon />
+              </DropdownBtn>
+              {isActive && (
+                <DropdownContent>
+                  <DropdownItem>Hello</DropdownItem>
+                  <DropdownItem>Hello</DropdownItem>
+                </DropdownContent>
+              )}
             </Dropdown>
           </Fields>
         </FieldSection>

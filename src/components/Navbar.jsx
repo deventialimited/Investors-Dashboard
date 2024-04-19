@@ -12,7 +12,6 @@ import { IoMdExit } from "react-icons/io";
 
 const Container = styled.div`
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
-  height: 112px;
   width: 100%;
   display: flex;
   justify-content: center;

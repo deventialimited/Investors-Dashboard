@@ -39,9 +39,10 @@ const ButtonArea = styled.div`
   align-items: center;
   gap: 1rem;
 `;
-const Button = styled.div`
+const Button = styled.a`
   border: 1px solid #ee1d52;
   border-radius: 15px;
+  text-decoration: none;
   padding: 10px 30px;
   display: flex;
   align-items: center;
@@ -63,7 +64,6 @@ const IconTwo = styled(BsShop)`
   width: 25px;
 `;
 const Span = styled.span``;
-
 const Dashboard = () => {
   return (
     <Container>
@@ -72,7 +72,7 @@ const Dashboard = () => {
         <Header>
           <Text>Dashboard</Text>
           <ButtonArea>
-            <Button>
+            <Button href="/cash-in">
               <IconOne></IconOne>
               <Span>Cash-In</Span>
             </Button>
