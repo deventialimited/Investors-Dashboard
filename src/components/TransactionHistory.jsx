@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { TransactionData } from "../data";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const Container = styled.div`
 const TopText = styled.div`
   font-size: 20px;
   font-weight: 500;
+  ${mobile({ fontSize: "15px" })}
 `;
 const FormArea = styled.div`
   display: flex;
@@ -44,16 +46,19 @@ const Title = styled.div`
   width: 80%;
   font-size: 14px;
   color: #002a5c;
+  ${mobile({ fontSize: "10px" })}
 `;
 const DataSection = styled.div``;
 const Bottom = styled.div`
   padding: 12px 30px;
   border-top: 1px solid #01365914;
+  ${mobile({ padding: "10px 5px" })}
 `;
 const Link = styled.div`
   font-size: 14px;
   width: 85%;
   color: #ee1d52;
+  ${mobile({ fontSize: "9px" })}
 `;
 const Pages = styled.div`
   width: 100%;
@@ -72,13 +77,18 @@ const ButtonSection = styled.div`
 const LeftIcon = styled(MdKeyboardDoubleArrowLeft)`
   height: 17px;
   width: 17px;
+  ${mobile({ height: "15px", width: "15px" })}
 `;
 const RightIcon = styled(MdKeyboardDoubleArrowRight)`
   height: 20px;
   width: 20px;
 `;
 
-const Text = styled.div``;
+const Text = styled.div`
+  font-size: 12.52px;
+
+  ${mobile({ display: "none" })}
+`;
 const Box = styled.div`
   display: flex;
   justify-content: space-between;
@@ -86,12 +96,44 @@ const Box = styled.div`
   background-color: #e6e6e6;
   padding: 5px 15px;
   border-radius: 42px;
-  color: #ee1d52;
+  ${mobile({ gap: "0.5rem", fontSize: "10px" })}
 `;
-const BoxOne = styled.div``;
-const BoxTwo = styled.div``;
-const BoxThree = styled.div``;
-const BoxFour = styled.div``;
+const BoxOne = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
+const BoxTwo = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
+const BoxThree = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
+const BoxFour = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
 
 const TransactionHistory = () => {
   return (

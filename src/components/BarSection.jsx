@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { SectionData } from "../data";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -20,6 +21,7 @@ const Section = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${mobile({ width: "130px", height: "100px " })}
 `;
 const Info = styled.div`
   width: 80%;
@@ -28,11 +30,13 @@ const Info = styled.div`
 const Amount = styled.div`
   font-size: 32px;
   font-weight: 600;
+  ${mobile({ fontSize: "16px" })}
 `;
 const Text = styled.div`
   font-size: 17px;
   font-weight: 500;
   line-height: 25px;
+  ${mobile({ fontSize: "14px" })}
 `;
 
 const BarSection = () => {

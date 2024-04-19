@@ -8,6 +8,7 @@ import ChartSection from "../components/ChartSection";
 import Details from "../components/Details";
 import UserActivity from "../components/UserActivity";
 import TransactionHistory from "../components/TransactionHistory";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 100%;
@@ -26,12 +27,14 @@ const Section = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  ${mobile({ flexDirection: "column", gap: "1rem" })}
 `;
 const Text = styled.div`
   font-size: 36px;
   font-weight: 500;
   color: #000000;
   font-family: "Poppins", sans-serif;
+  ${mobile({ fontSize: "30px" })}
 `;
 const ButtonArea = styled.div`
   display: flex;
@@ -54,16 +57,21 @@ const Button = styled.a`
     color: white;
     transition: all 0.3s ease-in-out;
   }
+  ${mobile({ padding: "5px 15px", borderRadius: "10px", gap: "3px" })}
 `;
 const IconOne = styled(AiOutlineDollarCircle)`
   height: 25px;
   width: 25px;
+  ${mobile({ height: "15px", width: "25px" })}
 `;
 const IconTwo = styled(BsShop)`
   height: 25px;
   width: 25px;
+  ${mobile({ height: "15px", width: "25px" })}
 `;
-const Span = styled.span``;
+const Span = styled.span`
+  ${mobile({ fontSize: "12px" })}
+`;
 const Dashboard = () => {
   return (
     <Container>

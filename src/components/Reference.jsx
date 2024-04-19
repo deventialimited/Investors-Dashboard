@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { IoCopyOutline } from "react-icons/io5";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { mobile } from "../responsive";
 
 const Section = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const Title = styled.div`
   color: #000000;
   font-size: 20px;
   font-weight: 500;
+  ${mobile({ fontSize: "15px" })}
 `;
 const Button = styled.a`
   color: #ee1d52;
@@ -35,6 +37,8 @@ const Button = styled.a`
   padding: 8px 19px;
   border-radius: 15px;
   text-decoration: none;
+  ${mobile({ fontSize: "9px", padding: "6px 16px" })}
+
   &:hover {
     transition: all 0.3s ease-in-out;
     background-color: #ee1d52;
@@ -46,12 +50,14 @@ const Text = styled.div`
   font-size: 15px;
   font-weight: 500;
   color: #666666;
+  ${mobile({ fontSize: "10px" })}
 `;
 const InfoPart = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
   width: 95%;
+  ${mobile({ width: "90%" })}
 `;
 const InfoField = styled.div`
   display: flex;
@@ -60,32 +66,40 @@ const InfoField = styled.div`
   padding: 14px 20px;
   width: 80%;
   justify-content: space-between;
+  ${mobile({ fontSize: "9px", padding: "10px 10px" })}
 `;
-const InfoLink = styled.div``;
+const InfoLink = styled.div`
+  ${mobile({ width: "70%" })}
+`;
 const InfoSection = styled.div`
   display: flex;
   gap: 2rem;
   color: #ee1d52;
+  ${mobile({ gap: "0.5rem" })}
 `;
 const InfoIcon = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 13px;
+  ${mobile({ fontSize: "10px", gap: "2px" })}
 `;
 const Info = styled.div``;
 const CopyIcon = styled(IoCopyOutline)`
   width: 24px;
   height: 24px;
+  ${mobile({ width: "12px", height: "12px" })}
 `;
 const ShareIcon = styled(IoShareSocialOutline)`
   width: 24px;
   height: 24px;
+  ${mobile({ width: "12px", height: "12px" })}
 `;
 const DeleteIcon = styled(RiDeleteBin5Line)`
   width: 24px;
   height: 24px;
   color: #ee1d52;
+  ${mobile({ width: "12px", height: "12px" })}
 `;
 
 const Reference = () => {

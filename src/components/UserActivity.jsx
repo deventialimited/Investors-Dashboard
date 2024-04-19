@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ReferenceData } from "../data";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const Container = styled.div`
 const TopText = styled.div`
   font-size: 20px;
   font-weight: 500;
+  ${mobile({ fontSize: "15px" })}
 `;
 const FormArea = styled.div`
   display: flex;
@@ -27,32 +29,36 @@ const Section = styled.div`
   display: flex;
 `;
 const ReferenceSection = styled.div`
-  flex: 1.5;
+  flex: 1;
   display: flex;
   flex-direction: column;
 `;
 const TitleArea = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: Fixed (44px);
   padding: 10px 0px;
   background-color: #e6eaef80;
   border-bottom: 1px solid #dbdbdb;
 `;
 const Title = styled.div`
-  width: 80%;
+  width: 85%;
   font-size: 14px;
   color: #002a5c;
+  ${mobile({ fontSize: "10px", height: "24px" })}
 `;
 const DataSection = styled.div``;
 const Bottom = styled.div`
+  width: 100%;
   padding: 12px 30px;
   border-top: 1px solid #01365914;
+  ${mobile({ padding: "10px 5px", height: "24px" })}
 `;
 const Link = styled.div`
   font-size: 14px;
   width: 85%;
   color: #ee1d52;
+  ${mobile({ fontSize: "9px" })}
 `;
 const Pages = styled.div`
   width: 100%;
@@ -71,13 +77,18 @@ const ButtonSection = styled.div`
 const LeftIcon = styled(MdKeyboardDoubleArrowLeft)`
   height: 17px;
   width: 17px;
+  ${mobile({ height: "15px", width: "15px" })}
 `;
 const RightIcon = styled(MdKeyboardDoubleArrowRight)`
   height: 20px;
   width: 20px;
 `;
 
-const Text = styled.div``;
+const Text = styled.div`
+  font-size: 12.52px;
+
+  ${mobile({ display: "none" })}
+`;
 const Box = styled.div`
   display: flex;
   justify-content: space-between;
@@ -85,12 +96,44 @@ const Box = styled.div`
   background-color: #e6e6e6;
   padding: 5px 15px;
   border-radius: 42px;
-  color: #ee1d52;
+  ${mobile({ gap: "0.5rem", fontSize: "10px" })}
 `;
-const BoxOne = styled.div``;
-const BoxTwo = styled.div``;
-const BoxThree = styled.div``;
-const BoxFour = styled.div``;
+const BoxOne = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
+const BoxTwo = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
+const BoxThree = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
+const BoxFour = styled.a`
+  color: #ee1d52;
+  text-decoration: none;
+
+  .active {
+    background-color: #ee1d52;
+    color: white;
+  }
+`;
 
 const UserActivity = () => {
   return (
@@ -128,10 +171,10 @@ const UserActivity = () => {
           <Text>Previous</Text>
         </ButtonSection>
         <Box>
-          <BoxOne>1</BoxOne>
-          <BoxTwo>2</BoxTwo>
-          <BoxThree>3</BoxThree>
-          <BoxFour>4</BoxFour>
+          <BoxOne href="">1</BoxOne>
+          <BoxTwo href="">2</BoxTwo>
+          <BoxThree href="">3</BoxThree>
+          <BoxFour href="">4</BoxFour>
         </Box>
         <ButtonSection>
           <Text>Next</Text> <RightIcon />

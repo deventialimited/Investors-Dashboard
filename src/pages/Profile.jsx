@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { FaChevronDown } from "react-icons/fa";
-
+import { mobile } from "../responsive";
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -17,6 +17,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  ${mobile({ width: "80%" })}
 `;
 const TextArea = styled.div`
   display: flex;
@@ -26,9 +27,10 @@ const TextArea = styled.div`
 const Title = styled.div`
   font-size: 36px;
   font-weight: 500;
+  ${mobile({ fontSize: "25px" })}
 `;
 const Dropdown = styled.div`
-  width: 70%;
+  width: 80%;
   color: #66666699;
   position: relative;
 `;
@@ -37,11 +39,12 @@ const DropdownBtn = styled.div`
   cursor: pointer;
   border-radius: 10px;
   background-color: white;
-
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 15px;
+  ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
 `;
 const Icon = styled(FaChevronDown)``;
 
@@ -62,6 +65,7 @@ const DropdownItem = styled.div`
   &:hover {
     background: #f4f4f4;
   }
+  ${mobile({ padding: "5px 15px" })}
 `;
 
 const Form = styled.form`
@@ -80,26 +84,30 @@ const InfoBoxes = styled.div`
 const FormText = styled.div`
   font-size: 26px;
   font-weight: 500;
+  ${mobile({ fontSize: "16px" })}
 `;
 const InfoBox = styled.div``;
 const Name = styled.div`
   padding-bottom: 5px;
   color: #66666699;
-  font-size: 12px;
+  font-size: 10px;
 `;
 const NameField = styled.div`
-  width: 70%;
+  width: 80%;
   height: 3rem;
   background-color: white;
   border: 1px solid #c8c8c8;
   border-radius: 12px;
+  ${mobile({ height: "2rem", borderRadius: "8px" })}
 `;
 const Field = styled.input`
   width: 97%;
   height: 100%;
+  font-size: 16px;
   padding: 0px 10px;
   background: transparent;
   border: none;
+  ${mobile({ width: "90%", fontSize: "10px" })}
 `;
 const CurrencyField = styled.div``;
 
@@ -116,6 +124,8 @@ const Button = styled.div`
   padding: 10px;
   cursor: pointer;
   box-shadow: 0px 4px 4px 0px #ee1d521a;
+  font-size: 22px;
+  font-weight: 500;
   &:hover {
     background: transparent;
     background: linear-gradient(to right, #ee1d52e3, #002a5ce3);
@@ -124,6 +134,13 @@ const Button = styled.div`
     background-clip: text;
     transition: all 0.5s ease-in-out;
   }
+  ${mobile({
+    padding: "7px",
+    borderRadius: "10px",
+    width: "70%",
+    fontSize: "10px",
+    fontWeight: "400",
+  })}
 `;
 
 const Profile = () => {

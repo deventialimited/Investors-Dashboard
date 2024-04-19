@@ -1,6 +1,7 @@
 import React from "react";
 import { SummaryData } from "../data";
 import styled from "styled-components";
+import { mobile } from "../responsive";
 
 const Section = styled.div`
   display: flex;
@@ -16,14 +17,18 @@ const Section = styled.div`
 `;
 const Text = styled.div`
   margin-bottom: 2rem;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 500;
+  ${mobile({ fontSize: "15px" })}
 `;
 const InfoArea = styled.div`
   width: 90%;
   gap: 0.5rem;
-
   margin-bottom: 1rem;
   color: #666666;
   font-size: 15px;
+  ${mobile({ fontSize: "10px" })}
 `;
 const Underline = styled.div`
   background-color: #e7e7e7;

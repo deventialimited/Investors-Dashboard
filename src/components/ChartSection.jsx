@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { mobile } from "../responsive";
 
 const Container = styled.div``;
 
@@ -23,6 +24,9 @@ const TextArea = styled.div`
   width: 95%;
   display: flex;
   justify-content: space-between;
+  font-size: 20px;
+  font-weight: 500;
+  ${mobile({ fontSize: "12px", flexDirection: "column", gap: "0.5rem" })}
 `;
 const Text = styled.div``;
 const Span = styled.span`
@@ -33,20 +37,31 @@ const RightArea = styled.div`
   align-items: center;
   gap: 5px;
   color: #ee1d52;
+  ${mobile({ gap: "10px" })}
 `;
 const ButtonLeft = styled(MdKeyboardDoubleArrowLeft)`
   border: 1px solid #ee1d52;
   border-radius: 14px;
   width: 40px;
   height: 26px;
+  cursor: pointer;
+  ${mobile({ borderRadius: "6px", width: "25px", height: "20px" })}
 `;
 const ButtonRight = styled(MdKeyboardDoubleArrowRight)`
   border: 1px solid #ee1d52;
   border-radius: 14px;
   width: 40px;
   height: 26px;
+  cursor: pointer;
+
+  ${mobile({ borderRadius: "6px", width: "25px", height: "20px" })}
 `;
-const Date = styled.div``;
+const Date = styled.div`
+  font-size: 16px;
+  text-align: center;
+  color: black;
+  ${mobile({ fontSize: "12px" })}
+`;
 const ChartSection = () => {
   return (
     <Container>

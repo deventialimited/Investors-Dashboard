@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { FaChevronDown } from "react-icons/fa";
 import UploadImage from "../assets/uploadimage.png";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -18,6 +19,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  ${mobile({ width: "80%" })}
 `;
 const TextArea = styled.div`
   display: flex;
@@ -27,6 +29,7 @@ const TextArea = styled.div`
 const Title = styled.div`
   font-size: 36px;
   font-weight: 500;
+  ${mobile({ fontSize: "25px" })}
 `;
 const Dropdown = styled.div`
   width: 70%;
@@ -38,11 +41,11 @@ const DropdownBtn = styled.div`
   cursor: pointer;
   border-radius: 10px;
   background-color: white;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 15px;
+  ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
 `;
 const Icon = styled(FaChevronDown)``;
 
@@ -54,7 +57,6 @@ const DropdownContent = styled.div`
   border: 1px solid #66666659;
   background-color: white;
   padding: 5px 5px;
-
   margin-top: 0.5rem;
 `;
 const DropdownItem = styled.div`
@@ -63,6 +65,7 @@ const DropdownItem = styled.div`
   &:hover {
     background: #f4f4f4;
   }
+  ${mobile({ padding: "5px 15px" })}
 `;
 
 const Form = styled.form`
@@ -81,6 +84,7 @@ const InfoBoxes = styled.div`
 const FormText = styled.div`
   font-size: 26px;
   font-weight: 500;
+  ${mobile({ fontSize: "16px" })}
 `;
 const InfoBox = styled.div``;
 const Name = styled.div`
@@ -93,6 +97,7 @@ const NameField = styled.div`
   background-color: white;
   border: 1px solid #c8c8c8;
   border-radius: 12px;
+  ${mobile({ height: "2rem", borderRadius: "8px" })}
 `;
 const Field = styled.input`
   width: 100%;
@@ -101,6 +106,7 @@ const Field = styled.input`
   align-items: center;
   padding: 0px 15px;
   background: transparent;
+  ${mobile({ width: "90%", fontSize: "10px" })}
 `;
 
 const ButtonSection = styled.div`

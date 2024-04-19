@@ -4,6 +4,7 @@ import LeftLogo from "../assets/LeftLogo.png";
 import RightLogo from "../assets/RightLogo.png";
 import CenterLogo from "../assets/centerlogo.png";
 import UserProfile from "../assets/Userprofile.jpeg";
+import { mobile } from "../responsive";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiCustomerService2Line } from "react-icons/ri";
@@ -24,14 +25,17 @@ const Section = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  ${mobile({ height: "80px" })}
 `;
 const LogoSection = styled.div`
   width: 40%;
+  ${mobile({ width: "40% " })}
 `;
 const Logo = styled.img`
   height: 73px;
   width: 115px;
   opacity: 80%;
+  ${mobile({ height: "50px", width: "80px" })}
 `;
 const MidSection = styled.div`
   margin-right: 3rem;
@@ -39,6 +43,7 @@ const MidSection = styled.div`
 const MidLogo = styled.img`
   height: 70px;
   width: 70px;
+  ${mobile({ display: "none" })}
 `;
 const IconSection = styled.div`
   display: flex;
@@ -54,6 +59,7 @@ const Icons = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  ${mobile({ display: "none" })}
 `;
 const IconOne = styled(AiOutlineDollarCircle)`
   height: 28px;
@@ -113,6 +119,7 @@ const ShopLogo = styled.img`
   height: 79px;
   width: 87px;
   opacity: 80%;
+  ${mobile({ display: "none" })}
 `;
 
 const Navbar = () => {

@@ -106,7 +106,7 @@ const FieldContainer = styled.div`
 
 const FieldSection = styled.div`
   width: 55%;
-  @media (max-width: 400px) {
+  @media only screen and(max-width: 380px) {
     width: 65%;
   }
 `;
