@@ -44,15 +44,18 @@ const TitleArea = styled.div`
 const Title = styled.div`
   width: 85%;
   font-size: 14px;
+
   color: #002a5c;
   ${mobile({ fontSize: "10px", height: "24px" })}
 `;
-const DataSection = styled.div``;
+const DataSection = styled.div`
+  ${mobile({ padding: "0px 10px" })}
+`;
 const Bottom = styled.div`
   width: 100%;
   padding: 12px 30px;
   border-top: 1px solid #01365914;
-  ${mobile({ padding: "10px 5px", height: "24px" })}
+  ${mobile({ height: "24px", padding: "15px 5px" })}
 `;
 const Link = styled.div`
   font-size: 14px;

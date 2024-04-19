@@ -32,7 +32,7 @@ const Title = styled.div`
   ${mobile({ fontSize: "25px" })}
 `;
 const Dropdown = styled.div`
-  width: 70%;
+  width: 80%;
   color: #66666699;
   position: relative;
 `;
@@ -58,6 +58,7 @@ const DropdownContent = styled.div`
   background-color: white;
   padding: 5px 5px;
   margin-top: 0.5rem;
+  ${mobile({ width: "95%" })}
 `;
 const DropdownItem = styled.div`
   padding: 10px 20px;
@@ -90,6 +91,7 @@ const InfoBox = styled.div``;
 const Name = styled.div`
   padding-bottom: 5px;
   font-size: 16px;
+  ${mobile({ fontSize: "12px" })}
 `;
 const NameField = styled.div`
   width: 80%;
@@ -131,6 +133,13 @@ const Button = styled.div`
     background-clip: text;
     transition: all 0.5s ease-in-out;
   }
+  ${mobile({
+    padding: "5px 15px",
+    borderRadius: "20px",
+    width: "40%",
+    fontSize: "10px",
+    fontWeight: "400",
+  })}
 `;
 const Image = styled.img`
   width: 20%;

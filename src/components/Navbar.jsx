@@ -43,7 +43,7 @@ const MidSection = styled.div`
 const MidLogo = styled.img`
   height: 70px;
   width: 70px;
-  ${mobile({ display: "none" })}
+  ${mobile({ height: "50px", width: "50px" })}
 `;
 const IconSection = styled.div`
   display: flex;
@@ -93,6 +93,7 @@ const Profile = styled.img`
   width: 44px;
   border-radius: 50%;
   object-fit: cover;
+  ${mobile({ height: "30px", width: "30px" })}
 `;
 const InfoSection = styled.div`
   color: #ffffff;
@@ -101,6 +102,7 @@ const InfoSection = styled.div`
   justify-content: space-between;
   gap: 5px;
   font-family: "Nunito Sans", sans-serif;
+  ${mobile({ display: "none" })}
 `;
 const Name = styled.div`
   font-size: 14px;
@@ -114,6 +116,7 @@ const ExitIcon = styled(IoMdExit)`
   height: 32px;
   width: 32px;
   cursor: pointer;
+  ${mobile({ height: "25px", width: "25px" })}
 `;
 const ShopLogo = styled.img`
   height: 79px;
