@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { MdVisibilityOff } from "react-icons/md";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -25,7 +27,6 @@ const Section = styled.div`
   padding: 3rem 0rem;
   border-radius: 24px;
   ${tablet({ height: "450px", width: "70%", gap: "1rem" })}
-
   ${mobile({ height: "250px", width: "70%", gap: "1rem" })}
 `;
 const TitleSection = styled.div``;
@@ -81,23 +82,24 @@ const Or = styled.div`
   font-size: 20px;
   ${mobile({ fontSize: "10px" })}
 `;
-const FieldContainer = styled.div`
+const FieldContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 55%;
   gap: 1.5rem;
   ${mobile({ fontSize: "15px", gap: "1rem" })}
 `;
-
 const FieldSection = styled.div`
-  width: 55%;
-  ${mobile({ width: "65%" })}
+  width: 100%;
+  display: flex;
+  align-items: left;
+  flex-direction: column;
 `;
 const Fields = styled.div`
+  width: 100%;
   border: 1px solid #66666659;
-  padding: 0px 15px;
   border-radius: 12px;
   height: 45px;
   display: flex;
@@ -108,10 +110,13 @@ const InputField = styled.input`
   width: 98%;
   height: 100%;
   border: none;
+  padding-left: 15px;
   background: transparent;
   ${mobile({ fontSize: "10px" })}
 `;
 const FieldIcon = styled(MdVisibilityOff)`
+  padding-right: 15px;
+
   height: 20px;
   width: 20px;
   cursor: pointer;
@@ -122,8 +127,9 @@ const Message = styled.div`
   font-size: 14px;
   ${mobile({ fontSize: "10px" })}
 `;
-const Button = styled.div`
+const Button = styled.button`
   display: flex;
+  text-decoration: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -131,13 +137,16 @@ const Button = styled.div`
   font-weight: 400;
   color: white;
   width: 50%;
-  height: 45px;
+  height: 40px;
+  border: none;
   border-radius: 40px;
   box-shadow: 0px 4px 4px 0px #ee1d521a;
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
   cursor: pointer;
   &:hover {
     background: transparent;
+    border: 1px solid #8f446b;
+
     background: linear-gradient(to right, #ee1d52e3, #002a5ce3);
     color: transparent;
     -webkit-background-clip: text;
@@ -172,6 +181,37 @@ const Signup = styled.a`
   color: #0059c2;
 `;
 const login = () => {
+  const [user, setUser] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+  const { storeTokenInLs } = useAuth();
+
+  const handelInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handeSubmit = async (e) => {
+    e.preventDefault();
+    console.log(user);
+    try {
+      const responce = await fetch(`http://localhost:3000/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (responce.ok) {
+        setUser({ email: "", password: "" });
+        navigate("/");
+        const resData = await responce.json();
+        storeTokenInLs(resData.token);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Container>
       <Section>
@@ -187,7 +227,7 @@ const login = () => {
           <Or>OR</Or>
           <Underline></Underline>
         </SectionTwo>
-        <FieldContainer>
+        <FieldContainer onSubmit={handeSubmit}>
           <FieldSection>
             <Fields>
               <InputField
@@ -196,6 +236,9 @@ const login = () => {
                 autoComplete="off"
                 type="text"
                 id="email"
+                name="email"
+                value={user.email}
+                onChange={handelInput}
               />
             </Fields>
           </FieldSection>
@@ -205,15 +248,18 @@ const login = () => {
                 placeholder="Enter password"
                 required
                 autoComplete="off"
-                type="text"
+                type="password"
                 id="password"
+                name="password"
+                value={user.password}
+                onChange={handelInput}
               />
               <FieldIcon />
             </Fields>
             <Message>Error message</Message>
           </FieldSection>
+          <Button type="submit">Login</Button>
         </FieldContainer>
-        <Button>Login</Button>
         <AccountText>
           <Account>Don’t have an account?</Account>
           <Signup href="/register">Sign up </Signup>

@@ -256,6 +256,7 @@ const Navbar = () => {
     const sidebar = document.querySelector(Sidebar);
     sidebar.style.display = "none";
   };
+
   return (
     <Container>
       <Section>

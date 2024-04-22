@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
+import { useNavigate } from "react-router-dom";
+import ReactFlagsSelect from "react-flags-select";
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -42,18 +43,20 @@ const Title = styled.div`
 
   ${mobile({ fontSize: "15px" })}
 `;
-const FieldSection = styled.div`
-  width: 50%;
+const FieldSection = styled.form`
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  justify-content: cetner;
+  justify-content: center;
+  align-items: center;
   color: #757575;
   ${tablet({ width: "50%" })}
   ${mobile({ width: "65%" })}
 `;
 const Fields = styled.div`
   border: 1px solid #66666659;
+  width: 60%;
   border-radius: 12px;
   height: 40px;
   display: flex;
@@ -72,62 +75,13 @@ const InputField = styled.input`
   ${tablet({ fontSize: "12px" })}
   ${mobile({ fontSize: "10px" })}
 `;
-const Dropdown = styled.div`
+const Dropdown = styled(ReactFlagsSelect)`
   width: 100%;
-  color: #66666699;
-`;
-const DropdownBtn = styled.div`
-  border: 1px solid #66666659;
+  border-radius: 20px;
   cursor: pointer;
-  border-radius: 10px;
-  background: transparent;
-  width: 90%;
-  font-size: 14px;
-  display: flex;
-  border: none;
-  padding: 10px 15px;
-  align-items: center;
-  justify-content: space-between;
-  ${tablet({
-    width: "90%",
-    padding: "10px 15px",
-    borderRadius: "8px",
-    fontSize: "12px",
-  })}
-  ${mobile({
-    width: "90%",
-    padding: "10px 15px",
-    borderRadius: "8px",
-    fontSize: "10px",
-  })}
 `;
-const Icon = styled(FaChevronDown)``;
 
-const DropdownContent = styled.div`
-  position: absolute;
-  width: 100%;
-  box-shadow: 0px 0px 5px 0px grey;
-  border-radius: 10px;
-  border: 1px solid #66666659;
-  background-color: white;
-  padding: 5px 5px;
-  margin-top: 0.5rem;
-  ${tablet({
-    width: "40%",
-    padding: "10px 15px",
-    borderRadius: "8px",
-    fontSize: "10px",
-  })}
-`;
-const DropdownItem = styled.div`
-  padding: 10px 20px;
-  cursor: pointer;
-  &:hover {
-    background: #f4f4f4;
-  }
-  ${mobile({ padding: "5px 15px" })}
-`;
-const Button = styled.a`
+const Button = styled.button`
   display: flex;
   text-decoration: none;
   flex-direction: column;
@@ -138,12 +92,15 @@ const Button = styled.a`
   color: white;
   width: 50%;
   height: 40px;
+  border: none;
   border-radius: 40px;
   box-shadow: 0px 4px 4px 0px #ee1d521a;
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
   cursor: pointer;
   &:hover {
     background: transparent;
+    border: 1px solid #8f446b;
+
     background: linear-gradient(to right, #ee1d52e3, #002a5ce3);
     color: transparent;
     -webkit-background-clip: text;
@@ -156,17 +113,56 @@ const Button = styled.a`
 `;
 
 const register = () => {
-  const [isActive, setIsActive] = useState(false);
-  const handelDropdown = () => {
-    setIsActive(!isActive);
+  const [user, setUser] = useState({
+    userName: "",
+    email: "",
+    fullName: "",
+    password: "",
+    country: "",
+    bankAccountDetails: "",
+    payoutDetails: "",
+  });
+  const [selected, setSelected] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUser({ ...user, [name]: value });
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(user);
+    try {
+      const responce = await fetch(`http://localhost:3000/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (responce.ok) {
+        setUser({
+          email: "",
+          password: "",
+          userName: "",
+          fullName: "",
+        });
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <Section>
         <TitleSection>
           <Title>Signup</Title>
         </TitleSection>
-        <FieldSection>
+        <FieldSection onSubmit={handleSubmit}>
           <Fields>
             <InputField
               placeholder="Username"
@@ -174,6 +170,9 @@ const register = () => {
               autoComplete="off"
               type="text"
               id="username"
+              name="userName"
+              value={user.userName}
+              onChange={handleInput}
             ></InputField>
           </Fields>
           <Fields>
@@ -182,7 +181,10 @@ const register = () => {
               required
               autoComplete="off"
               type="text"
+              name="email"
               id="email"
+              value={user.email}
+              onChange={handleInput}
             />
           </Fields>
           <Fields>
@@ -191,45 +193,50 @@ const register = () => {
               required
               autoComplete="off"
               type="text"
+              name="fullName"
               id="name"
+              value={user.fullName}
+              onChange={handleInput}
             />
           </Fields>
-
           <Fields>
             <InputField
               placeholder="Password"
               required
               autoComplete="off"
-              type="text"
+              type="password"
+              name="password"
               id="password"
+              value={user.password}
+              onChange={handleInput}
             />
           </Fields>
-
           <Fields>
             <InputField
               placeholder="Confirm password"
               required
               autoComplete="off"
-              type="text"
+              type="password"
+              name="password"
               id="password"
+              value={user.password}
+              onChange={handleInput}
             />
           </Fields>
-
           <Fields>
-            <Dropdown>
-              <DropdownBtn onClick={handelDropdown}>
-                Select Method <Icon />
-              </DropdownBtn>
-              {isActive && (
-                <DropdownContent>
-                  <DropdownItem>Hello</DropdownItem>
-                  <DropdownItem>Hello</DropdownItem>
-                </DropdownContent>
-              )}
-            </Dropdown>
+            <Dropdown
+              selected={selected}
+              onSelect={(code) => setSelected(code)}
+              placeholder="Select Country"
+              searchable
+              searchplaceholder="Search Countries"
+              name="country"
+              value={user.country}
+              onChange={handleInput}
+            />
           </Fields>
+          <Button type="submit">Create</Button>
         </FieldSection>
-        <Button href="/">Create</Button>
       </Section>
     </Container>
   );
