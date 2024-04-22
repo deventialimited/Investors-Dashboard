@@ -4,6 +4,7 @@ import { TransactionData } from "../data";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ const Container = styled.div`
 const TopText = styled.div`
   font-size: 20px;
   font-weight: 500;
+  ${tablet({ fontSize: "17px" })}
   ${mobile({ fontSize: "15px" })}
 `;
 const FormArea = styled.div`
@@ -46,18 +48,22 @@ const Title = styled.div`
   width: 80%;
   font-size: 14px;
   color: #002a5c;
-  ${mobile({ fontSize: "10px" })}
+  ${tablet({ fontSize: "13px", height: "35px" })}
+
+  ${mobile({ fontSize: "10px", height: "24px" })}
 `;
 const DataSection = styled.div``;
 const Bottom = styled.div`
   padding: 12px 30px;
   border-top: 1px solid #01365914;
-  ${mobile({ padding: "10px 5px" })}
+  ${tablet({ height: "30px", padding: "10px 13px" })}
+  ${mobile({ height: "24px", padding: "10px 13px" })}
 `;
 const Link = styled.div`
   font-size: 14px;
   width: 85%;
   color: #ee1d52;
+  ${tablet({ fontSize: "11px", width: "100%" })}
   ${mobile({ fontSize: "9px" })}
 `;
 const Pages = styled.div`

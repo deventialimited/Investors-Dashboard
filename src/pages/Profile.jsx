@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -44,6 +46,7 @@ const DropdownBtn = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 12px 15px;
+
   ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
 `;
 const Icon = styled(FaChevronDown)``;
@@ -56,8 +59,8 @@ const DropdownContent = styled.div`
   border: 1px solid #66666659;
   background-color: white;
   padding: 5px 5px;
-
   margin-top: 0.5rem;
+  ${tablet({ width: "100%" })}
 `;
 const DropdownItem = styled.div`
   padding: 10px 20px;
@@ -65,7 +68,9 @@ const DropdownItem = styled.div`
   &:hover {
     background: #f4f4f4;
   }
-  ${mobile({ padding: "5px 15px" })}
+  ${tablet({ fontSize: "13px" })}
+
+  ${mobile({ padding: "5px 15px", fontSize: "10px" })}
 `;
 
 const Form = styled.form`
@@ -90,7 +95,7 @@ const InfoBox = styled.div``;
 const Name = styled.div`
   padding-bottom: 5px;
   color: #66666699;
-  font-size: 10px;
+  font-size: 12px;
 `;
 const NameField = styled.div`
   width: 80%;
@@ -107,6 +112,8 @@ const Field = styled.input`
   padding: 0px 10px;
   background: transparent;
   border: none;
+  ${tablet({ width: "90%", fontSize: "13px" })}
+
   ${mobile({ width: "90%", fontSize: "10px" })}
 `;
 const CurrencyField = styled.div``;
@@ -124,7 +131,7 @@ const Button = styled.div`
   padding: 10px;
   cursor: pointer;
   box-shadow: 0px 4px 4px 0px #ee1d521a;
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 500;
   &:hover {
     background: transparent;
@@ -134,12 +141,22 @@ const Button = styled.div`
     background-clip: text;
     transition: all 0.5s ease-in-out;
   }
+  ${tablet({
+    padding: "12px 10px",
+    borderRadius: "20px",
+    width: "50%",
+    fontSize: "14px",
+    fontWeight: "400",
+  })}
+  @media screen and (max-width: 580px) {
+    font-size: 12px;
+    width: 70%;
+  }
   ${mobile({
     padding: "7px",
-    borderRadius: "10px",
+    borderRadius: "15px",
     width: "70%",
-    fontSize: "10px",
-    fontWeight: "400",
+    fontSize: "8px",
   })}
 `;
 

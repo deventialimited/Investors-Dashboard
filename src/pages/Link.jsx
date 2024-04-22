@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { mobile } from "../responsive";
+import { tablet } from "../responsive";
+import { FaChevronDown } from "react-icons/fa";
 
 const Container = styled.div`
   width: 100%;
@@ -48,16 +51,19 @@ const InfoArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  ${mobile({ width: "70%", gap: "1rem" })}
 `;
 const Infos = styled.div``;
 const InfoName = styled.div`
   padding-bottom: 10px;
+  ${mobile({ fontSize: "10px" })}
 `;
 const InfoInput = styled.div`
   width: 90%;
   border: 1px solid #c8c8c8;
   border-radius: 12px;
   height: 49px;
+  ${mobile({ height: "35px" })}
 `;
 const Input = styled.input`
   border: none;
@@ -67,15 +73,20 @@ const Input = styled.input`
 const Text = styled.div`
   font-size: 14px;
   color: #66666699;
+  ${tablet({ fontSize: "10px" })}
 `;
 const Button = styled.a`
-  width: 50%;
+  width: 30%;
   text-align: center;
   padding: 10px;
+  font-size: 15.04px;
+  font-weight: 500;
   color: white;
   text-decoration: none;
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
   border-radius: 27px;
+  ${tablet({ borderRadius: "20px", fontSize: "12px" })}
+  ${mobile({ fontSize: "10px" })}
 `;
 const EndText = styled.div`
   font-size: 14px;
@@ -89,33 +100,86 @@ const InfoField = styled.div`
   width: 86%;
   justify-content: space-between;
   margin-bottom: 5rem;
+  ${mobile({ fontSize: "9px", padding: "10px 10px" })}
 `;
-const InfoLink = styled.div``;
+const InfoLink = styled.div`
+  ${mobile({ width: "70%" })}
+`;
 const InfoSection = styled.div`
   display: flex;
   gap: 2rem;
   color: #ee1d52;
+  ${mobile({ gap: "0.5rem" })}
 `;
 const InfoIcon = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 13px;
+  ${mobile({ fontSize: "10px", gap: "2px" })}
 `;
-const Info = styled.div``;
+const Info = styled.div`
+  ${tablet({ display: "none" })}
+  ${mobile({ display: "none" })}
+`;
 const CopyIcon = styled(IoCopyOutline)`
   width: 24px;
   height: 24px;
+  ${mobile({ width: "12px", height: "12px" })}
 `;
 const ShareIcon = styled(IoShareSocialOutline)`
   width: 24px;
   height: 24px;
+  ${mobile({ width: "12px", height: "12px" })}
 `;
 const AddIcon = styled(IoMdAddCircleOutline)`
   width: 24px;
   height: 24px;
+  ${mobile({ width: "12px", height: "12px" })}
+`;
+const Dropdown = styled.div`
+  width: 100%;
+  color: #66666699;
+  position: relative;
+`;
+const DropdownBtn = styled.div`
+  border: 1px solid #66666659;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
+`;
+const IconDown = styled(FaChevronDown)``;
+
+const DropdownContent = styled.div`
+  position: absolute;
+  width: 100%;
+  box-shadow: 0px 0px 5px 0px grey;
+  border-radius: 10px;
+  border: 1px solid #66666659;
+  background-color: white;
+  padding: 5px 5px;
+
+  margin-top: 0.5rem;
+`;
+const DropdownItem = styled.div`
+  padding: 10px 20px;
+  cursor: pointer;
+  &:hover {
+    background: #f4f4f4;
+  }
+  ${mobile({ padding: "5px 15px" })}
 `;
 const Link = () => {
+  const [isActive, setIsActive] = useState(false);
+  const handelDropdown = () => {
+    setIsActive(!isActive);
+  };
   return (
     <Container>
       <Section>
@@ -129,13 +193,33 @@ const Link = () => {
           <Infos>
             <InfoName>Compaign</InfoName>
             <InfoInput>
-              <Input></Input>
+              <Dropdown>
+                <DropdownBtn onClick={handelDropdown}>
+                  Select <IconDown />
+                </DropdownBtn>
+                {isActive && (
+                  <DropdownContent>
+                    <DropdownItem>Hello</DropdownItem>
+                    <DropdownItem>Hello</DropdownItem>
+                  </DropdownContent>
+                )}
+              </Dropdown>
             </InfoInput>
           </Infos>
           <Infos>
             <InfoName>Friendly Links</InfoName>
             <InfoInput>
-              <Input></Input>
+              <Dropdown>
+                <DropdownBtn onClick={handelDropdown}>
+                  Select <IconDown />
+                </DropdownBtn>
+                {isActive && (
+                  <DropdownContent>
+                    <DropdownItem>Hello</DropdownItem>
+                    <DropdownItem>Hello</DropdownItem>
+                  </DropdownContent>
+                )}
+              </Dropdown>
             </InfoInput>
           </Infos>
           <Infos>

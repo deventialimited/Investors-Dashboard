@@ -9,6 +9,7 @@ import Details from "../components/Details";
 import UserActivity from "../components/UserActivity";
 import TransactionHistory from "../components/TransactionHistory";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   height: 100%;
@@ -34,7 +35,7 @@ const Text = styled.div`
   font-weight: 500;
   color: #000000;
   font-family: "Poppins", sans-serif;
-  ${mobile({ fontSize: "30px" })}
+  ${mobile({ fontSize: "25px" })} ${tablet({ fontSize: "30px" })}
 `;
 const ButtonArea = styled.div`
   display: flex;
@@ -49,6 +50,7 @@ const Button = styled.a`
   padding: 10px 30px;
   display: flex;
   align-items: center;
+  font-size: 16px;
   gap: 10px;
   color: #ee1d52;
   cursor: pointer;
@@ -57,7 +59,18 @@ const Button = styled.a`
     color: white;
     transition: all 0.3s ease-in-out;
   }
-  ${mobile({ padding: "5px 15px", borderRadius: "10px", gap: "3px" })}
+  ${mobile({
+    padding: "5px 15px",
+    borderRadius: "10px",
+    gap: "3px",
+    fontSize: "12px",
+  })}
+  ${tablet({
+    borderRadius: "10px",
+    padding: "5px 15px",
+    gap: "3px",
+    fontSize: "14px",
+  })}
 `;
 const IconOne = styled(AiOutlineDollarCircle)`
   height: 25px;
@@ -80,7 +93,7 @@ const Dashboard = () => {
         <Header>
           <Text>Dashboard</Text>
           <ButtonArea>
-            <Button href="/cash-in">
+            <Button href="/cashin">
               <IconOne></IconOne>
               <Span>Cash-In</Span>
             </Button>

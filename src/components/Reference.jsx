@@ -4,6 +4,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
 
 const Section = styled.div`
   display: flex;
@@ -29,6 +30,7 @@ const Title = styled.div`
   color: #000000;
   font-size: 20px;
   font-weight: 500;
+  ${tablet({ fontSize: "17px" })}
   ${mobile({ fontSize: "15px" })}
 `;
 const Button = styled.a`
@@ -37,35 +39,42 @@ const Button = styled.a`
   padding: 8px 19px;
   border-radius: 15px;
   text-decoration: none;
-  ${mobile({ fontSize: "9px", padding: "6px 16px" })}
 
   &:hover {
     transition: all 0.3s ease-in-out;
     background-color: #ee1d52;
     color: white;
   }
+  ${tablet({ fontSize: "11px", padding: "8px 19px" })}
+  ${mobile({ fontSize: "9px", padding: "6px 16px" })}
 `;
 const Text = styled.div`
   width: 95%;
   font-size: 15px;
   font-weight: 500;
   color: #666666;
+  ${tablet({ fontSize: "12px" })}
   ${mobile({ fontSize: "10px" })}
 `;
 const InfoPart = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  width: 95%;
+  width: 100%;
+  ${tablet({ width: "95%" })}
+
   ${mobile({ width: "90%" })}
 `;
 const InfoField = styled.div`
   display: flex;
+  align-items: center;
   border: 1px solid #e7e7e7;
   border-radius: 5px;
   padding: 14px 20px;
   width: 80%;
   justify-content: space-between;
+  ${tablet({ fontSize: "11px", padding: "10px 10px" })}
+
   ${mobile({ fontSize: "9px", padding: "10px 10px" })}
 `;
 const InfoLink = styled.div`
@@ -75,6 +84,8 @@ const InfoSection = styled.div`
   display: flex;
   gap: 2rem;
   color: #ee1d52;
+  ${tablet({ gap: "0.7rem" })}
+
   ${mobile({ gap: "0.5rem" })}
 `;
 const InfoIcon = styled.div`
@@ -82,9 +93,14 @@ const InfoIcon = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 13px;
+  ${tablet({ fontSize: "12px", gap: "2px" })}
+
   ${mobile({ fontSize: "10px", gap: "2px" })}
 `;
-const Info = styled.div``;
+const Info = styled.div`
+  font-size: 13px;
+  ${mobile({ display: "none" })}
+`;
 const CopyIcon = styled(IoCopyOutline)`
   width: 24px;
   height: 24px;

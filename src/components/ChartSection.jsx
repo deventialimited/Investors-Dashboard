@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { LineChart } from "@mui/x-charts/LineChart";
+import { LineChart, LinePlot } from "@mui/x-charts/LineChart";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { mobile } from "../responsive";
+import { ChartsXAxis, ResponsiveChartContainer } from "@mui/x-charts";
+import { colors } from "@mui/material";
 
 const Container = styled.div``;
 
@@ -62,35 +64,47 @@ const Date = styled.div`
   color: black;
   ${mobile({ fontSize: "12px" })}
 `;
+
 const ChartSection = () => {
   return (
     <Container>
       <ChartSections>
-        <TextArea>
-          <Text>
-            Earnings Overview<Span>(for last 30 days)</Span>
-          </Text>
-          <RightArea>
-            <ButtonLeft />
-            <Date>March 2024</Date>
-            <ButtonRight />
-          </RightArea>
-        </TextArea>
-        <LineChart
+        <ResponsiveChartContainer
+          height={300}
+          series={[{ type: "line", data: [1, 2, 3, 2, 1], color: "#EE1D52" }]}
           xAxis={[
             {
-              data: [1, 2, 3, 4, 5, 6, 7],
+              data: [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+              ],
+
+              scaleType: "band",
+              id: "x-axis-id",
             },
           ]}
-          series={[
-            {
-              data: [110, 190, 220, 250, 270, 260, 230],
-            },
-          ]}
-          width={1300}
-          height={300}
-          colors={["#EE1D52"]}
-        ></LineChart>
+        >
+          <LinePlot />
+          <ChartsXAxis label="X axis" position="bottom" axisId="x-axis-id" />
+        </ResponsiveChartContainer>
       </ChartSections>
     </Container>
   );

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { MdVisibilityOff } from "react-icons/md";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
+
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
   height: 100vh;
@@ -22,6 +24,8 @@ const Section = styled.div`
   gap: 2rem;
   padding: 3rem 0rem;
   border-radius: 24px;
+  ${tablet({ height: "450px", width: "70%", gap: "1rem" })}
+
   ${mobile({ height: "250px", width: "70%", gap: "1rem" })}
 `;
 const TitleSection = styled.div``;
@@ -45,16 +49,15 @@ const LinkSection = styled.div`
   cursor: pointer;
   font-size: 15px;
   font-weight: 300;
-
+  ${tablet({ fontSize: "12px", width: "55%", padding: "5px 0px", gap: "5px" })}
   ${mobile({ fontSize: "10px", width: "65%", padding: "5px 0px", gap: "5px" })}
 `;
 const Icon = styled(FcGoogle)`
   height: 24px;
   width: 24px;
-  @media (max-width: 400px) {
-    height: 10px;
-    width: 10px;
-  }
+  ${mobile({ height: "18px", width: "18px" })}
+
+  ${mobile({ height: "15px", width: "15px" })}
 `;
 
 const Text = styled.div`
@@ -141,7 +144,9 @@ const Button = styled.div`
     background-clip: text;
     transition: all 0.3s ease-in-out;
   }
-  ${mobile({ width: "25%", height: "45px", fontSize: "10px" })}
+  ${tablet({ width: "30%", height: "40px", fontSize: "14px" })}
+
+  ${mobile({ width: "25%", height: "30px", fontSize: "10px" })}
 `;
 const AccountText = styled.div`
   display: flex;

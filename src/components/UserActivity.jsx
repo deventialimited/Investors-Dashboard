@@ -4,6 +4,7 @@ import { ReferenceData } from "../data";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const Container = styled.div`
 const TopText = styled.div`
   font-size: 20px;
   font-weight: 500;
+  ${tablet({ fontSize: "17px" })}
   ${mobile({ fontSize: "15px" })}
 `;
 const FormArea = styled.div`
@@ -36,32 +38,53 @@ const ReferenceSection = styled.div`
 const TitleArea = styled.div`
   display: flex;
   justify-content: center;
-  height: Fixed (44px);
   padding: 10px 0px;
   background-color: #e6eaef80;
   border-bottom: 1px solid #dbdbdb;
 `;
 const Title = styled.div`
-  width: 85%;
-  font-size: 14px;
-
+  width: 90%;
+  font-size: 15px;
   color: #002a5c;
+  ${tablet({ fontSize: "13px", height: "35px" })}
+
   ${mobile({ fontSize: "10px", height: "24px" })}
 `;
 const DataSection = styled.div`
-  ${mobile({ padding: "0px 10px" })}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+
+  ${mobile({ paddingLeft: "7px", width: "100%" })}
 `;
 const Bottom = styled.div`
+  display: flex;
+  height: 30px;
   width: 100%;
-  padding: 12px 30px;
+  justify-content: center;
   border-top: 1px solid #01365914;
-  ${mobile({ height: "24px", padding: "15px 5px" })}
+  padding: 12px 0px;
+  ${tablet({ height: "30px" })}
+  ${mobile({ height: "24px", width: "100%" })}
 `;
 const Link = styled.div`
-  font-size: 14px;
-  width: 85%;
+  width: 90%;
+  font-size: 15px;
   color: #ee1d52;
-  ${mobile({ fontSize: "9px" })}
+  @media (max-width: 1180px) {
+    font-size: 12px;
+  }
+  ${tablet({
+    fontSize: "11px",
+    width: "100%",
+    padding: "0px 5px",
+  })}
+  @media (max-width: 840px) {
+    font-size: 9px;
+  }
+  ${mobile({ fontSize: "9px", width: "100%", padding: "0px 0px" })};
 `;
 const Pages = styled.div`
   width: 100%;

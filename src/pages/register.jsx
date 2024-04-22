@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -22,7 +23,14 @@ const Section = styled.div`
   gap: 2rem;
   padding: 1.5rem 0rem;
   border-radius: 24px;
-  ${mobile({ height: "350px", width: "80%", gap: "1rem" })}
+
+  ${tablet({
+    height: "500px",
+    width: "70%",
+    gap: "2rem",
+  })}
+
+  ${mobile({ height: "400px", width: "80%", gap: "1rem" })}
 `;
 const TitleSection = styled.div``;
 const Title = styled.div`
@@ -30,6 +38,8 @@ const Title = styled.div`
   font-weight: 500;
   text-align: center;
   color: #333333;
+  ${tablet({ fontSize: "25px" })}
+
   ${mobile({ fontSize: "15px" })}
 `;
 const FieldSection = styled.div`
@@ -39,6 +49,7 @@ const FieldSection = styled.div`
   gap: 1.2rem;
   justify-content: cetner;
   color: #757575;
+  ${tablet({ width: "50%" })}
   ${mobile({ width: "65%" })}
 `;
 const Fields = styled.div`
@@ -48,14 +59,17 @@ const Fields = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${tablet({ height: "35px", borderRadius: "8px" })}
   ${mobile({ height: "30px", borderRadius: "8px" })}
 `;
 const InputField = styled.input`
   width: 100%;
   height: 100%;
   border: none;
+  font-size: 14px;
   padding-left: 15px;
   background: transparent;
+  ${tablet({ fontSize: "12px" })}
   ${mobile({ fontSize: "10px" })}
 `;
 const Dropdown = styled.div`
@@ -67,11 +81,19 @@ const DropdownBtn = styled.div`
   cursor: pointer;
   border-radius: 10px;
   background: transparent;
-  width: 100%;
+  width: 90%;
+  font-size: 14px;
   display: flex;
   border: none;
+  padding: 10px 15px;
   align-items: center;
   justify-content: space-between;
+  ${tablet({
+    width: "90%",
+    padding: "10px 15px",
+    borderRadius: "8px",
+    fontSize: "12px",
+  })}
   ${mobile({
     width: "90%",
     padding: "10px 15px",
@@ -89,8 +111,13 @@ const DropdownContent = styled.div`
   border: 1px solid #66666659;
   background-color: white;
   padding: 5px 5px;
-
   margin-top: 0.5rem;
+  ${tablet({
+    width: "40%",
+    padding: "10px 15px",
+    borderRadius: "8px",
+    fontSize: "10px",
+  })}
 `;
 const DropdownItem = styled.div`
   padding: 10px 20px;
@@ -123,7 +150,9 @@ const Button = styled.a`
     background-clip: text;
     transition: all 0.3s ease-in-out;
   }
-  ${mobile({ width: "30%", padding: "5px 0px", fontSize: "10px" })}
+  ${tablet({ width: "30%", fontSize: "14px" })}
+
+  ${mobile({ width: "30%", height: "30px", fontSize: "10px" })}
 `;
 
 const register = () => {

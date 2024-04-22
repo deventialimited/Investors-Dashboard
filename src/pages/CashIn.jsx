@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { FaChevronDown } from "react-icons/fa";
 import UploadImage from "../assets/uploadimage.png";
 import { mobile } from "../responsive";
+import { tablet } from "../responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -105,7 +106,10 @@ const Field = styled.input`
   width: 100%;
   height: 100%;
   border: none;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+
   padding: 0px 15px;
   background: transparent;
   ${mobile({ width: "90%", fontSize: "10px" })}
@@ -138,6 +142,13 @@ const Button = styled.div`
     borderRadius: "20px",
     width: "40%",
     fontSize: "10px",
+    fontWeight: "400",
+  })}
+  ${tablet({
+    padding: "7px 15px",
+    borderRadius: "20px",
+    width: "40%",
+    fontSize: "12px",
     fontWeight: "400",
   })}
 `;
