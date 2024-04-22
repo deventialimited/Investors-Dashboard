@@ -1,0 +1,10 @@
+MONGO_URI="mongodb+srv://jawad:jawad123@mernapp.qcjgekh.mongodb.net/investors-dashboard?retryWrites=true&w=majority&appName=MERNapp
+"
+
+JWT_KEY="javainuse-secret-key"
+
+CLOUDINARY_CLOUD_NAME="dnxhi1znx"
+CLOUDINARY_API_KEY="284411129436399"
+CLOUDINARY_API_SECRET="F8SNJG_QpCyFG9wAzRWzPJ_Tqgs"
+
+BASE_URL="http://localhost:3000"
