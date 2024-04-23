@@ -1,5 +1,6 @@
 import Referral from "../models/Referral.model.js";
 import ShortUniqueId from 'short-unique-id';
+import mongoose from "mongoose";
 
 const uid = new ShortUniqueId();
 

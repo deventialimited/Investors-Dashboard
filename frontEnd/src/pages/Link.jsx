@@ -9,7 +9,6 @@ import { tablet } from "../responsive"
 import { FaChevronDown } from "react-icons/fa"
 import { api } from "../axios/axios"
 import { useSelector } from "react-redux"
-import { toast } from "react-toastify"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

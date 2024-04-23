@@ -169,6 +169,25 @@ const Profile = () => {
     setIsActive(!isActive);
   };
 
+  const [formData, setFormData] = useState({
+    email: "",
+    fullName: "",
+    currentPassword: "",
+    newPassword: "",
+    repeatNewPassword: "",
+    country: "",
+    payoutMethod: "",
+    bankAccountDetails: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <Container>
       <Navbar />
@@ -183,8 +202,8 @@ const Profile = () => {
               <Name>Name</Name>
               <NameField>
                 <Field
-                  type="text"
-                  name="text"
+                  type="email"
+                  name="email"
                   required
                   autoComplete="off"
                   placeholder="thomas@gmail.com"
@@ -194,8 +213,8 @@ const Profile = () => {
             <InfoBox>
               <NameField>
                 <Field
-                  type="text"
-                  name="text"
+                  type="fullName"
+                  name="fullName"
                   required
                   autoComplete="off"
                   placeholder="Thomas Charles"
@@ -219,8 +238,8 @@ const Profile = () => {
             <InfoBox>
               <NameField>
                 <Field
-                  type="text"
-                  name="text"
+                  type="currentPassword"
+                  name="currentPassword"
                   required
                   autoComplete="off"
                   placeholder="Current Password"
@@ -233,8 +252,8 @@ const Profile = () => {
             <InfoBox>
               <NameField>
                 <Field
-                  type="text"
-                  name="text"
+                  type="newPassword"
+                  name="newPassword"
                   required
                   autoComplete="off"
                   placeholder="New Password"
@@ -282,8 +301,8 @@ const Profile = () => {
               <Name>You can receive earnings in personal bank account</Name>
               <NameField>
                 <Field
-                  type="text"
-                  name="text"
+                  type="bankDetails"
+                  name="bankDetails"
                   required
                   autoComplete="off"
                   placeholder="Bank Account Details"
