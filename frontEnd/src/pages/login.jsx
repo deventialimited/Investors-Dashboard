@@ -4,7 +4,13 @@ import { FcGoogle } from "react-icons/fc";
 import { MdVisibilityOff } from "react-icons/md";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { api } from "../axios/axios";
+import { setUser } from "../context/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -172,12 +178,37 @@ const Account = styled.div`
 const Signup = styled.a`
   color: #0059c2;
 `;
+
 const login = () => {
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [showPass, setShowPass] = useState(false)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleSubmit = async () => {
+    try {
+      
+      const { data } = await api.post('/login', {
+        email: formData.email,
+        password: formData.password
+      })
+
+      dispatch(setUser({...data.user, token: data.token}))
+      toast.success(data.message)
+      navigate('/')
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message)
+    }
+  }
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -186,9 +217,12 @@ const login = () => {
       [name]: value,
     }));
   };
+
+  console.log(formData);
  
   return (
     <Container>
+      <ToastContainer />
       <Section>
         <TitleSection>
           <Title>Login</Title>
@@ -208,6 +242,9 @@ const login = () => {
               <InputField
                 placeholder="Enter your email address"
                 required
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 autoComplete="off"
                 type="text"
                 id="email"
@@ -219,16 +256,19 @@ const login = () => {
               <InputField
                 placeholder="Enter password"
                 required
+                value={formData.password}
+                onChange={handleChange}
+                name="password"
                 autoComplete="off"
-                type="text"
+                type={showPass ? `text` : `password`}
                 id="password"
               />
-              <FieldIcon />
+              <FieldIcon onClick={() => setShowPass(!showPass)}/>
             </Fields>
-            <Message>Error message</Message>
+            {/* <Message>Error message</Message> */}
           </FieldSection>
         </FieldContainer>
-        <Button>Login</Button>
+        <Button onClick={handleSubmit}>Login</Button>
         <AccountText>
           <Account>Don’t have an account?</Account>
           <Signup href="/register">Sign up </Signup>

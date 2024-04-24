@@ -4,6 +4,11 @@ import Navbar from "../components/Navbar";
 import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
+import { useSelector } from "react-redux";
+import { api } from "../axios/axios";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Container = styled.div`
   width: 100%;
@@ -31,11 +36,6 @@ const Title = styled.div`
   font-weight: 500;
   ${mobile({ fontSize: "25px" })}
 `;
-const Dropdown = styled.div`
-  width: 80%;
-  color: #66666699;
-  position: relative;
-`;
 const DropdownBtn = styled.div`
   border: 1px solid #66666659;
   cursor: pointer;
@@ -51,18 +51,17 @@ const DropdownBtn = styled.div`
 `;
 const Icon = styled(FaChevronDown)``;
 
-const DropdownContent = styled.div`
-  position: absolute;
+const DropdownContent = styled.select`
   width: 100%;
   box-shadow: 0px 0px 5px 0px grey;
   border-radius: 10px;
   border: 1px solid #66666659;
   background-color: white;
-  padding: 5px 5px;
+  padding: 12px 5px;
   margin-top: 0.5rem;
   ${tablet({ width: "100%" })}
 `;
-const DropdownItem = styled.div`
+const DropdownItem = styled.option`
   padding: 10px 20px;
   cursor: pointer;
   &:hover {
@@ -161,24 +160,50 @@ const Button = styled.div`
 `;
 
 const Profile = () => {
-  const [isActive, setIsActive] = useState(false);
-  const nameStyle = {
-    textAlign: "right",
-  };
-  const handelDropdown = () => {
-    setIsActive(!isActive);
-  };
+  const user = useSelector(state => state.user)
+
 
   const [formData, setFormData] = useState({
-    email: "",
-    fullName: "",
+    email: user.email || "",
+    fullName: user.fullName || "",
     currentPassword: "",
     newPassword: "",
     repeatNewPassword: "",
-    country: "",
-    payoutMethod: "",
-    bankAccountDetails: "",
+    country: user.country || "",
+    payoutMethod: user.payoutMethod || "",
+    bankDetails: user.bankAccountDetails || "",
   });
+
+
+  const handleSubmit = async () => {
+
+    if (formData.newPassword !== formData.repeatNewPassword) {
+      toast.error('passwords do not match')
+      return
+    }
+
+    try {
+      const res = await api.post('/update-user', {
+        email: formData.email,
+        fullName: formData.fullName,
+        country: formData.country,
+        currentPassword: formData.currentPassword,
+        newPassword: formData.newPassword,
+        payoutMethod: formData.payoutMethod,
+        bankDetails: formData.bankDetails
+      }, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+
+      console.log("response from update profile: ", res);
+      toast.success('profile updated')
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message)
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -188,8 +213,11 @@ const Profile = () => {
     }));
   };
 
+  console.log(formData);
+
   return (
     <Container>
+      <ToastContainer />
       <Navbar />
       <Section>
         <TextArea>
@@ -204,6 +232,8 @@ const Profile = () => {
                 <Field
                   type="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                   autoComplete="off"
                   placeholder="thomas@gmail.com"
@@ -215,23 +245,25 @@ const Profile = () => {
                 <Field
                   type="fullName"
                   name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
                   required
                   autoComplete="off"
                   placeholder="Thomas Charles"
                 ></Field>
               </NameField>
             </InfoBox>
-            <Dropdown>
-              <DropdownBtn onClick={handelDropdown}>
-                Country <Icon />
-              </DropdownBtn>
-              {isActive && (
-                <DropdownContent>
-                  <DropdownItem>Hello</DropdownItem>
-                  <DropdownItem>Hello</DropdownItem>
-                </DropdownContent>
-              )}
-            </Dropdown>
+            <DropdownContent
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+            >
+              <DropdownItem value="">Select Country</DropdownItem>
+              <DropdownItem value="USA">USA</DropdownItem>
+              <DropdownItem value="UK">UK</DropdownItem>
+              <DropdownItem value="Canada">Canada</DropdownItem>
+              <DropdownItem value="Australia">Australia</DropdownItem>
+            </DropdownContent>
           </InfoBoxes>
           <InfoBoxes>
             <FormText>Change Your Password</FormText>
@@ -240,11 +272,13 @@ const Profile = () => {
                 <Field
                   type="currentPassword"
                   name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={handleChange}
                   required
                   autoComplete="off"
                   placeholder="Current Password"
                 ></Field>
-                <Name style={nameStyle}>
+                <Name style={{ textAlign: "right" }}>
                   we need your current password to confirm your changes
                 </Name>
               </NameField>
@@ -252,57 +286,49 @@ const Profile = () => {
             <InfoBox>
               <NameField>
                 <Field
-                  type="newPassword"
+                  type="password"
                   name="newPassword"
                   required
+                  value={formData.newPassword}
+                  onChange={handleChange}
                   autoComplete="off"
                   placeholder="New Password"
                 ></Field>
               </NameField>
             </InfoBox>
-            <Dropdown>
-              <DropdownBtn onClick={handelDropdown}>
-                Repeat New Password <Icon />
-              </DropdownBtn>
-              {isActive && (
-                <DropdownContent>
-                  <DropdownItem>Hello</DropdownItem>
-                  <DropdownItem>Hello</DropdownItem>
-                </DropdownContent>
-              )}
-            </Dropdown>
+            <InfoBox>
+              <NameField>
+                <Field
+                  type="password"
+                  name="repeatNewPassword"
+                  required
+                  value={formData.repeatNewPassword}
+                  onChange={handleChange}
+                  autoComplete="off"
+                  placeholder="New Password"
+                ></Field>
+              </NameField>
+            </InfoBox>
           </InfoBoxes>
           <InfoBoxes>
             <FormText>Payout Details</FormText>
-
-            <InfoBox>
-              <InfoBox>
-                <Dropdown>
-                  <DropdownBtn onClick={handelDropdown}>
-                    Select your payout method <Icon />
-                  </DropdownBtn>
-                  {isActive && (
-                    <DropdownContent>
-                      <DropdownItem>Hello</DropdownItem>
-                      <DropdownItem>Hello</DropdownItem>
-                    </DropdownContent>
-                  )}
-                </Dropdown>
-                <Name>
-                  Before we can pay you, we must have your Payment Information.
-                  Be sure that are properly submitted.
-                </Name>
-              </InfoBox>
-              <CurrencyField>
-                <Field></Field>
-              </CurrencyField>
-            </InfoBox>
+            <DropdownContent
+              name="payoutMethod"
+              value={formData.payoutMethod}
+              onChange={handleChange}
+            >
+              <DropdownItem value="">Select Payout Method</DropdownItem>
+              <DropdownItem value="PayPal">PayPal</DropdownItem>
+              <DropdownItem value="Bank Transfer">Bank Transfer</DropdownItem>
+            </DropdownContent>
             <InfoBox>
               <Name>You can receive earnings in personal bank account</Name>
               <NameField>
                 <Field
                   type="bankDetails"
                   name="bankDetails"
+                  value={formData.bankDetails}
+                  onChange={handleChange}
                   required
                   autoComplete="off"
                   placeholder="Bank Account Details"
@@ -311,7 +337,7 @@ const Profile = () => {
             </InfoBox>
           </InfoBoxes>
           <ButtonSection>
-            <Button>Save Changes</Button>
+            <Button onClick={handleSubmit}>Save Changes</Button>
           </ButtonSection>
         </Form>
       </Section>

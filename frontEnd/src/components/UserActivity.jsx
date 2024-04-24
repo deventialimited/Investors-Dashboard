@@ -73,7 +73,20 @@ const Bottom = styled.div`
 const Link = styled.div`
   width: 90%;
   font-size: 15px;
-  color: #ee1d52;
+  color: ${({ status }) => {
+    switch (status) {
+      case "Completed":
+        return "green";
+      case "Cancelled":
+        return "red";
+      case "Pending":
+        return "orange";
+      case "Active":
+        return "darkpurple";
+      default:
+        return "#ee1d52";
+    }
+  }};
   @media (max-width: 1180px) {
     font-size: 12px;
   }
@@ -202,7 +215,7 @@ const UserActivity = () => {
                   <Link>{item.dataTwo}</Link>
                 </Bottom>
                 <Bottom>
-                  <Link>{item.status}</Link>
+                <Link status={item.status}>{item.status}</Link>
                 </Bottom>
               </ReferenceSection>
             ))}

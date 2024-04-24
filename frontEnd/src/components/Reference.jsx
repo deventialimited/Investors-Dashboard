@@ -81,8 +81,11 @@ const InfoField = styled.div`
   ${mobile({ fontSize: "9px", padding: "10px 10px" })}
 `
 const InfoLink = styled.div`
+  text-decoration: underline;
+  color: #002a5c;
+  cursor: pointer;
   ${mobile({ width: "70%" })}
-`
+`;
 const InfoSection = styled.div`
   display: flex;
   gap: 2rem;
