@@ -13,6 +13,8 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlineExitToApp } from "react-icons/md";
 import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../context/userSlice";
 
 const Container = styled.div`
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
@@ -20,6 +22,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:active {
+  }
 `;
 const Section = styled.div`
   width: 95%;
@@ -30,7 +34,6 @@ const Section = styled.div`
   align-items: center;
   ${mobile({ height: "80px" })}
 `;
-
 const LogoSection = styled.div`
   width: 40%;
   ${mobile({ width: "40% " })}
@@ -39,7 +42,6 @@ const Logo = styled.img`
   height: 73px;
   width: 115px;
   opacity: 80%;
-  cursor: pointer;
   ${mobile({ height: "50px", width: "80px" })}
 `;
 const MidSection = styled.div`
@@ -257,17 +259,19 @@ const Navbar = () => {
     sidebar.style.display = "none";
   };
 
-  const handleClick = () => {
-    window.location.href = "/login";
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    console.log("hit the logout: ");
+    dispatch(logout());
   };
-  const handleLogo = () => {
-    window.location.href = "/";
-  };
+
   return (
     <Container>
       <Section>
         <LogoSection>
-          <Logo src={LeftLogo} onClick={handleLogo} />
+          <Logo src={LeftLogo} />
         </LogoSection>
         <MidSection>
           <MidLogo src={CenterLogo} />
@@ -290,12 +294,10 @@ const Navbar = () => {
           <Underline></Underline>
           <Profile src={UserProfile} />
           <InfoSection>
-            <Name>Thomas</Name>
+            <Name>{user ? <>{user.fullName}</> : <>Thomas</>}</Name>
             <User>User</User>
           </InfoSection>
-          <IconSection onClick={handleClick}>
-            <ExitIcon />
-          </IconSection>
+          <ExitIcon onClick={handleLogout} />
         </ProfileSection>
         <ShopLogo src={RightLogo} />
         <Menu>
@@ -329,8 +331,8 @@ const Navbar = () => {
                 <Span>Notification</Span>
               </IconSec>
               <IconSec>
-                <LastIcon href="/login" />
-                <Span href="/login">Logout</Span>
+                <LastIcon />
+                <Span href="/login">Exit</Span>
               </IconSec>
             </Sec>
           </Sidebar>

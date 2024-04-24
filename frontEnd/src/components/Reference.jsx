@@ -7,7 +7,8 @@ import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { api } from "../axios/axios";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   display: flex;
@@ -81,6 +82,9 @@ const InfoField = styled.div`
   ${mobile({ fontSize: "9px", padding: "10px 10px" })}
 `;
 const InfoLink = styled.div`
+  text-decoration: underline;
+  color: #002a5c;
+  cursor: pointer;
   ${mobile({ width: "70%" })}
 `;
 const InfoSection = styled.div`
@@ -96,6 +100,11 @@ const InfoIcon = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+  }
   ${tablet({ fontSize: "12px", gap: "2px" })}
 
   ${mobile({ fontSize: "10px", gap: "2px" })}
@@ -107,6 +116,7 @@ const Info = styled.div`
 const CopyIcon = styled(IoCopyOutline)`
   width: 24px;
   height: 24px;
+
   ${mobile({ width: "12px", height: "12px" })}
 `;
 const ShareIcon = styled(IoShareSocialOutline)`
@@ -139,10 +149,19 @@ const Reference = () => {
     }
   };
 
+  const handleCopyLink = (referralLink) => {
+    navigator.clipboard.writeText(referralLink);
+    toast.success("Referral link copied to clipboard");
+  };
+
   useEffect(() => {
     const fetchRefs = async () => {
       try {
-        const { data } = await api.get("/referral/get-all-refs");
+        const { data } = await api.get("/referral/get-refs", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
         setRefs(data.referrals);
       } catch (error) {
@@ -157,21 +176,19 @@ const Reference = () => {
 
   return (
     <Section>
+      <ToastContainer />
       <InfoArea>
         <Title>Active Referral Links</Title>
         <Button href="/link">Generate Referral Link</Button>
       </InfoArea>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. 
-      </Text>
+
       {refs &&
         refs.map((ref) => (
           <InfoPart>
             <InfoField>
               <InfoLink>{ref.referralLink}</InfoLink>
               <InfoSection>
-                <InfoIcon>
+                <InfoIcon onClick={() => handleCopyLink(ref.referralLink)}>
                   <Info>Copy</Info>
                   <CopyIcon />
                 </InfoIcon>

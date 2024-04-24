@@ -121,6 +121,12 @@ const InfoIcon = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 13px;
+
+  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+  }
   ${mobile({ fontSize: "10px", gap: "2px" })}
 `;
 const Info = styled.div`
@@ -209,6 +215,11 @@ const Link = () => {
     }
   };
 
+  const handleCopyLink = (referralLink) => {
+    navigator.clipboard.writeText(referralLink);
+    toast.success("Referral link copied to clipboard");
+  };
+
   return (
     <Container>
       <ToastContainer />
@@ -220,7 +231,7 @@ const Link = () => {
       </Section>
       <InfoSections>
         <InfoArea>
-          <Infos>
+          {/* <Infos>
             <InfoName>Compaign</InfoName>
             <InfoInput>
               <Dropdown>
@@ -261,7 +272,7 @@ const Link = () => {
           <Text>
             Enter any URL from this website in the form above to generate a
             referral link!
-          </Text>
+          </Text> */}
           <Button onClick={handleGenerateLink}>Generate</Button>
           <EndText>Generated Referral Link</EndText>
           <InfoField>
@@ -273,18 +284,18 @@ const Link = () => {
               )}
             </InfoLink>
             <InfoSection>
-              <InfoIcon>
+              <InfoIcon onClick={() => handleCopyLink(referLink.referralLink)}>
                 <Info>Copy</Info>
                 <CopyIcon />
               </InfoIcon>
-              <InfoIcon>
+              {/* <InfoIcon>
                 <Info>Share</Info>
                 <ShareIcon />
               </InfoIcon>
               <InfoIcon>
                 <Info>Add to List</Info>
                 <AddIcon />
-              </InfoIcon>
+              </InfoIcon> */}
             </InfoSection>
           </InfoField>
         </InfoArea>

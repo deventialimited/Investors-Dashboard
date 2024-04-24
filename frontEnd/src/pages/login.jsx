@@ -4,6 +4,12 @@ import { FcGoogle } from "react-icons/fc";
 import { MdVisibilityOff } from "react-icons/md";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
+import { useDispatch, useSelector } from "react-redux";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { api } from "../axios/axios";
+import { setUser } from "../context/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -26,6 +32,7 @@ const Section = styled.div`
   padding: 3rem 0rem;
   border-radius: 24px;
   ${tablet({ height: "450px", width: "70%", gap: "1rem" })}
+
   ${mobile({ height: "250px", width: "70%", gap: "1rem" })}
 `;
 const TitleSection = styled.div``;
@@ -81,24 +88,23 @@ const Or = styled.div`
   font-size: 20px;
   ${mobile({ fontSize: "10px" })}
 `;
-const FieldContainer = styled.form`
+const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 55%;
+  width: 100%;
   gap: 1.5rem;
   ${mobile({ fontSize: "15px", gap: "1rem" })}
 `;
+
 const FieldSection = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: left;
-  flex-direction: column;
+  width: 55%;
+  ${mobile({ width: "65%" })}
 `;
 const Fields = styled.div`
-  width: 100%;
   border: 1px solid #66666659;
+  padding: 0px 15px;
   border-radius: 12px;
   height: 45px;
   display: flex;
@@ -109,13 +115,10 @@ const InputField = styled.input`
   width: 98%;
   height: 100%;
   border: none;
-  padding-left: 15px;
   background: transparent;
   ${mobile({ fontSize: "10px" })}
 `;
 const FieldIcon = styled(MdVisibilityOff)`
-  padding-right: 15px;
-
   height: 20px;
   width: 20px;
   cursor: pointer;
@@ -126,9 +129,8 @@ const Message = styled.div`
   font-size: 14px;
   ${mobile({ fontSize: "10px" })}
 `;
-const Button = styled.button`
+const Button = styled.div`
   display: flex;
-  text-decoration: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -136,16 +138,13 @@ const Button = styled.button`
   font-weight: 400;
   color: white;
   width: 50%;
-  height: 40px;
-  border: none;
+  height: 45px;
   border-radius: 40px;
   box-shadow: 0px 4px 4px 0px #ee1d521a;
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
   cursor: pointer;
   &:hover {
     background: transparent;
-    border: 1px solid #8f446b;
-
     background: linear-gradient(to right, #ee1d52e3, #002a5ce3);
     color: transparent;
     -webkit-background-clip: text;
@@ -179,43 +178,47 @@ const Account = styled.div`
 const Signup = styled.a`
   color: #0059c2;
 `;
+
 const login = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
-  const [responce, setResponce] = useState(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [showPass, setShowPass] = useState(false);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handelInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUser({ ...user, [name]: value });
-  };
-
-  const handeSubmit = async (e) => {
-    e.preventDefault();
-    console.log(user);
+  const handleSubmit = async () => {
     try {
-      const responce = await fetch(`http://localhost:3000/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
+      const { data } = await api.post("/login", {
+        email: formData.email,
+        password: formData.password,
       });
 
-      if (responce.ok) {
-        setUser({ email: "", password: "" });
-        navigate("/");
-      } else {
-        const resData = await responce.json();
-        setResponce(resData.message);
-      }
+      dispatch(setUser({ ...data.user, token: data.token }));
+      toast.success(data.message);
+      navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  console.log(formData);
+
   return (
     <Container>
+      <ToastContainer />
       <Section>
         <TitleSection>
           <Title>Login</Title>
@@ -229,18 +232,18 @@ const login = () => {
           <Or>OR</Or>
           <Underline></Underline>
         </SectionTwo>
-        <FieldContainer onSubmit={handeSubmit}>
+        <FieldContainer>
           <FieldSection>
             <Fields>
               <InputField
                 placeholder="Enter your email address"
                 required
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 autoComplete="off"
                 type="text"
                 id="email"
-                name="email"
-                value={user.email}
-                onChange={handelInput}
               />
             </Fields>
           </FieldSection>
@@ -249,19 +252,19 @@ const login = () => {
               <InputField
                 placeholder="Enter password"
                 required
-                autoComplete="off"
-                type="password"
-                id="password"
+                value={formData.password}
+                onChange={handleChange}
                 name="password"
-                value={user.password}
-                onChange={handelInput}
+                autoComplete="off"
+                type={showPass ? `text` : `password`}
+                id="password"
               />
-              <FieldIcon />
+              <FieldIcon onClick={() => setShowPass(!showPass)} />
             </Fields>
-            <Message>{responce}</Message>
+            {/* <Message>Error message</Message> */}
           </FieldSection>
-          <Button type="submit">Login</Button>
         </FieldContainer>
+        <Button onClick={handleSubmit}>Login</Button>
         <AccountText>
           <Account>Don’t have an account?</Account>
           <Signup href="/register">Sign up </Signup>

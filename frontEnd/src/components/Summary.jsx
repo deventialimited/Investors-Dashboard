@@ -43,7 +43,15 @@ const Info = styled.div`
   margin-bottom: 5px;
 `;
 
-const Summary = () => {
+const Summary = ({ data }) => {
+  const SummaryData = [
+    { id: 1, title: "Total Referrals:", amount: data?.totalReferrals || "50" },
+    { id: 2, title: "Total Earnings:", amount: data?.totalEarning || "$1000" },
+    { id: 3, title: "UnVerified Referrals:", amount: "0" },
+    { id: 4, title: "Clicks:", amount: "0" },
+    { id: 5, title: "Conversion:", amount: "0" },
+  ];
+
   return (
     <Section>
       <Text>Summary for This Month</Text>

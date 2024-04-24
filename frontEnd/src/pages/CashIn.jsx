@@ -5,6 +5,10 @@ import { FaChevronDown } from "react-icons/fa";
 import UploadImage from "../assets/uploadimage.png";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
+import { useSelector } from "react-redux";
+import { api } from "../axios/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled.div`
   width: 100%;
@@ -158,6 +162,68 @@ const Image = styled.img`
 `;
 const CashIn = () => {
   const [isActive, setIsActive] = useState(false);
+  const user = useSelector((state) => state.user);
+
+  const [formData, setFormData] = useState({
+    receiptName: "",
+    accountNo: "",
+    senderName: "",
+    referenceNo: "",
+    currency: "",
+    iWillPayAmount: "",
+    commission: "",
+  });
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append("receiptName", formData.receiptName);
+    formDataToSubmit.append("accountNo", formData.accountNo);
+    formDataToSubmit.append("senderName", formData.senderName);
+    formDataToSubmit.append("referenceNo", formData.referenceNo);
+    formDataToSubmit.append("currency", formData.currency);
+    formDataToSubmit.append("iWillPayAmount", formData.iWillPayAmount);
+    formDataToSubmit.append("commission", formData.commission);
+    formDataToSubmit.append("receipt", selectedFile);
+
+    try {
+      const { data } = await api.post(
+        "/receipt/create-receipt",
+        formDataToSubmit,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      toast.success("receipt created successfully");
+
+      setFormData({
+        receiptName: "",
+        accountNo: "",
+        senderName: "",
+        referenceNo: "",
+        currency: "",
+        iWillPayAmount: "",
+        commission: "",
+      });
+      setSelectedFile(null);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   const handelDropdown = () => {
     setIsActive(!isActive);
@@ -169,6 +235,7 @@ const CashIn = () => {
   };
   return (
     <Container>
+      <ToastContainer />
       <Navbar />
       <Section>
         <TextArea>
@@ -193,7 +260,9 @@ const CashIn = () => {
               <NameField>
                 <Field
                   type="text"
-                  name="text"
+                  name="receiptName"
+                  value={formData.receiptName}
+                  onChange={handleInputChange}
                   required
                   autoComplete="off"
                   placeholder="Thomas Charles"
@@ -205,8 +274,10 @@ const CashIn = () => {
               <NameField>
                 <Field
                   type="text"
-                  name="text"
+                  name="accountNo"
                   required
+                  value={formData.accountNo}
+                  onChange={handleInputChange}
                   autoComplete="off"
                   placeholder="879823738973"
                 ></Field>
@@ -220,8 +291,10 @@ const CashIn = () => {
               <NameField>
                 <Field
                   type="text"
-                  name="text"
+                  name="senderName"
                   required
+                  value={formData.senderName}
+                  onChange={handleInputChange}
                   autoComplete="off"
                   placeholder="Enter name"
                 ></Field>
@@ -232,7 +305,9 @@ const CashIn = () => {
               <NameField>
                 <Field
                   type="text"
-                  name="text"
+                  name="referenceNo"
+                  value={formData.referenceNo}
+                  onChange={handleInputChange}
                   required
                   autoComplete="off"
                   placeholder="Enter Reference number"
@@ -241,26 +316,26 @@ const CashIn = () => {
             </InfoBox>
             <InfoBox>
               <Name>Select Currency</Name>
-              <InfoBox>
-                <Dropdown>
-                  <DropdownBtn onClick={handelDropdown}>
-                    Select Method <Icon />
-                  </DropdownBtn>
-                  {isActive && (
-                    <DropdownContent>
-                      <DropdownItem>Hello</DropdownItem>
-                      <DropdownItem>Hello</DropdownItem>
-                    </DropdownContent>
-                  )}
-                </Dropdown>
-              </InfoBox>
+              <NameField>
+                <Field
+                  type="text"
+                  name="currency"
+                  value={formData.currency}
+                  onChange={handleInputChange}
+                  required
+                  autoComplete="off"
+                  placeholder="Enter Reference number"
+                ></Field>
+              </NameField>
             </InfoBox>
             <InfoBox>
               <Name>I will Pay</Name>
               <NameField>
                 <Field
                   type="text"
-                  name="text"
+                  name="iWillPayAmount"
+                  value={formData.iWillPayAmount}
+                  onChange={handleInputChange}
                   required
                   autoComplete="off"
                   placeholder="Enter amount"
@@ -272,7 +347,9 @@ const CashIn = () => {
               <NameField>
                 <Field
                   type="text"
-                  name="text"
+                  name="commission"
+                  value={formData.commission}
+                  onChange={handleInputChange}
                   required
                   autoComplete="off"
                   placeholder="Enter amount"
@@ -284,18 +361,23 @@ const CashIn = () => {
               <NameField>
                 <Field
                   type="file"
-                  name="text"
+                  name="receipt"
+                  onChange={(e) => setSelectedFile(e.target.files[0])}
                   required
                   autoComplete="off"
                   placeholder="No File Chosen"
                 ></Field>
               </NameField>
-              <Image src={UploadImage} />
+              <Image
+                src={
+                  selectedFile ? URL.createObjectURL(selectedFile) : UploadImage
+                }
+              />
             </InfoBox>
           </InfoBoxes>
           <ButtonSection>
             <Button style={inlineStyling}>Clear</Button>
-            <Button>Submit</Button>
+            <Button onClick={handleSubmit}>Submit</Button>
           </ButtonSection>
         </Form>
       </Section>

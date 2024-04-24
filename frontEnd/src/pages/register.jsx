@@ -7,10 +7,9 @@ import { api } from "../axios/axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "../context/userSlice";
-import { Navigate, useNavigate } from "react-router-dom";
-import { formatDate } from "date-fns";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -40,6 +39,8 @@ const Section = styled.div`
 
   ${mobile({ height: "400px", width: "80%", gap: "1rem" })}
 `;
+
+const DropdownOption = styled.option``;
 const TitleSection = styled.div``;
 const Title = styled.div`
   font-size: 32px;
@@ -80,9 +81,12 @@ const InputField = styled.input`
   ${tablet({ fontSize: "12px" })}
   ${mobile({ fontSize: "10px" })}
 `;
-const Dropdown = styled.div`
+const Dropdown = styled.select`
   width: 100%;
-  color: #66666699;
+  height: 100%;
+  border: none;
+  font-size: 14px;
+  background: transparent;
 `;
 const DropdownBtn = styled.div`
   border: 1px solid #66666659;
@@ -169,6 +173,8 @@ const register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  let { ref } = useParams();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
@@ -181,6 +187,7 @@ const register = () => {
         password: formData.password,
         fullName: formData.fullName,
         country: formData.country,
+        ref,
       });
 
       dispatch(setUser({ ...data.user, token: data.token }));
@@ -209,13 +216,16 @@ const register = () => {
     }));
   };
 
-  const handleCountrySelect = (country) => {
+  const handleCountrySelect = (e) => {
+    const selectedCountry = e.target.value;
     setFormData((prevData) => ({
       ...prevData,
-      country: country,
+      country: selectedCountry,
     }));
     setIsActive(false);
   };
+
+  // console.log(formData);
 
   return (
     <Container>
@@ -289,31 +299,13 @@ const register = () => {
           </Fields>
 
           <Fields>
-            <Dropdown>
-              <DropdownBtn onClick={() => setIsActive(!isActive)}>
-                Select Country <Icon />
-              </DropdownBtn>
-              {isActive && (
-                <DropdownContent>
-                  <DropdownItem onClick={() => handleCountrySelect("USA")}>
-                    USA
-                  </DropdownItem>
-                  <DropdownItem onClick={() => handleCountrySelect("UK")}>
-                    UK
-                  </DropdownItem>
-                  <DropdownItem onClick={() => handleCountrySelect("Canada")}>
-                    Canada
-                  </DropdownItem>
-                  <DropdownItem
-                    onClick={() => handleCountrySelect("Australia")}
-                  >
-                    Australia
-                  </DropdownItem>
-                  <DropdownItem onClick={() => handleCountrySelect("Germany")}>
-                    Germany
-                  </DropdownItem>
-                </DropdownContent>
-              )}
+            <Dropdown value={formData.country} onChange={handleCountrySelect}>
+              <DropdownOption value="">Select Country</DropdownOption>
+              <DropdownOption value="USA">USA</DropdownOption>
+              <DropdownOption value="UK">UK</DropdownOption>
+              <DropdownOption value="Canada">Canada</DropdownOption>
+              <DropdownOption value="Australia">Australia</DropdownOption>
+              <DropdownOption value="Germany">Germany</DropdownOption>
             </Dropdown>
           </Fields>
         </FieldSection>
