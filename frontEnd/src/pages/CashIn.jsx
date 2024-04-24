@@ -205,7 +205,6 @@ const CashIn = () => {
         }
       })
 
-      console.log(data);
       toast.success("receipt created successfully")
 
       setFormData({
