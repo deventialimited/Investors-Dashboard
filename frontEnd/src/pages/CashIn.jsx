@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import { FaChevronDown } from "react-icons/fa";
 import UploadImage from "../assets/uploadimage.png";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
@@ -16,7 +15,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
   margin-bottom: 5rem;
 `;
 const Section = styled.div`
@@ -30,48 +28,13 @@ const TextArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
+  margin-top: 2rem;
 `;
 const Title = styled.div`
   font-size: 36px;
   font-weight: 500;
   ${mobile({ fontSize: "25px" })}
-`;
-const Dropdown = styled.div`
-  width: 80%;
-  color: #66666699;
-  position: relative;
-`;
-const DropdownBtn = styled.div`
-  border: 1px solid #66666659;
-  cursor: pointer;
-  border-radius: 10px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 15px;
-  ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
-`;
-const Icon = styled(FaChevronDown)``;
-
-const DropdownContent = styled.div`
-  position: absolute;
-  width: 100%;
-  box-shadow: 0px 0px 5px 0px grey;
-  border-radius: 10px;
-  border: 1px solid #66666659;
-  background-color: white;
-  padding: 5px 5px;
-  margin-top: 0.5rem;
-  ${mobile({ width: "95%" })}
-`;
-const DropdownItem = styled.div`
-  padding: 10px 20px;
-  cursor: pointer;
-  &:hover {
-    background: #f4f4f4;
-  }
-  ${mobile({ padding: "5px 15px" })}
 `;
 
 const Form = styled.form`
@@ -101,10 +64,30 @@ const Name = styled.div`
 const NameField = styled.div`
   width: 80%;
   height: 3rem;
+  display: flex;
   background-color: white;
   border: 1px solid #c8c8c8;
   border-radius: 12px;
   ${mobile({ height: "2rem", borderRadius: "8px" })}
+`;
+const DropdownContent = styled.select`
+  width: 100%;
+  height: 100%;
+  color: #666666;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  ${tablet({})}
+`;
+const DropdownItem = styled.option`
+  padding: 10px 20px;
+  cursor: pointer;
+  &:hover {
+    background: #f4f4f4;
+  }
+  ${tablet({ fontSize: "13px" })}
+
+  ${mobile({ padding: "5px 15px", fontSize: "10px" })}
 `;
 const Field = styled.input`
   width: 100%;
@@ -161,7 +144,6 @@ const Image = styled.img`
   margin-top: 2rem;
 `;
 const CashIn = () => {
-  const [isActive, setIsActive] = useState(false);
   const user = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
@@ -225,13 +207,19 @@ const CashIn = () => {
     }
   };
 
-  const handelDropdown = () => {
-    setIsActive(!isActive);
-  };
   const inlineStyling = {
     background: "transparent",
     border: "1px solid #EE1D52",
     color: "#EE1D52",
+  };
+  const inlineStyle = {
+    width: "15%",
+    height: "100%",
+    color: "#666666",
+    borderRadius: "10px 0px 0px 10px",
+    border: "none",
+    borderRight: "1px solid #c8c8c8",
+    backgroundColor: "#f2f2f7",
   };
   return (
     <Container>
@@ -240,17 +228,17 @@ const CashIn = () => {
       <Section>
         <TextArea>
           <Title>Cash-In</Title>
-          <Dropdown>
-            <DropdownBtn onClick={handelDropdown}>
-              Select Method <Icon />
-            </DropdownBtn>
-            {isActive && (
-              <DropdownContent>
-                <DropdownItem>Hello</DropdownItem>
-                <DropdownItem>Hello</DropdownItem>
-              </DropdownContent>
-            )}
-          </Dropdown>
+          <NameField>
+            <DropdownContent
+              name="payoutMethod"
+              value={formData.payoutMethod}
+              onChange={handleInputChange}
+            >
+              <DropdownItem value="">Select Method</DropdownItem>
+              <DropdownItem value="PayPal">PayPal</DropdownItem>
+              <DropdownItem value="Bank Transfer">Bank Transfer</DropdownItem>
+            </DropdownContent>
+          </NameField>
         </TextArea>
         <Form>
           <InfoBoxes>
@@ -261,7 +249,7 @@ const CashIn = () => {
                 <Field
                   type="text"
                   name="receiptName"
-                  value={formData.receiptName}
+                  value={formData.pay}
                   onChange={handleInputChange}
                   required
                   autoComplete="off"
@@ -317,14 +305,27 @@ const CashIn = () => {
             <InfoBox>
               <Name>Select Currency</Name>
               <NameField>
+                <DropdownContent
+                  name="country"
+                  value={formData.currency}
+                  onChange={handleInputChange}
+                  style={inlineStyle}
+                >
+                  <DropdownItem value="">Select</DropdownItem>
+                  <DropdownItem value="$">$</DropdownItem>
+                  <DropdownItem value="PKR">PKR</DropdownItem>
+                  <DropdownItem value="INR">INR</DropdownItem>
+                  <DropdownItem value="EURO">€</DropdownItem>
+                </DropdownContent>
+
                 <Field
                   type="text"
-                  name="currency"
-                  value={formData.currency}
+                  name="amount"
+                  value={formData.iWillPayAmount}
                   onChange={handleInputChange}
                   required
                   autoComplete="off"
-                  placeholder="Enter Reference number"
+                  placeholder="1"
                 ></Field>
               </NameField>
             </InfoBox>

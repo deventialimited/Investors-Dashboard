@@ -21,6 +21,7 @@ const ChartSections = styled.div`
   border-radius: 25px;
   box-shadow: 0px 8px 17px 0px #0000001a;
 `;
+
 const TextArea = styled.div`
   text-align: left;
   width: 95%;
@@ -69,6 +70,18 @@ const ChartSection = () => {
   return (
     <Container>
       <ChartSections>
+        <TextArea>
+          <Text>
+            Earnings Overview
+            <Span>(for Last 30 days)</Span>
+          </Text>
+          <RightArea>
+            <ButtonLeft></ButtonLeft>
+            <Date>March 2024</Date>
+            <ButtonRight></ButtonRight>
+          </RightArea>
+        </TextArea>
+
         <ResponsiveChartContainer
           height={300}
           series={[{ type: "line", data: [1, 2, 3, 2, 1], color: "#EE1D52" }]}

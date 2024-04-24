@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { useSelector } from "react-redux";
@@ -16,7 +15,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
   margin-bottom: 5rem;
 `;
 const Section = styled.div`
@@ -27,6 +25,8 @@ const Section = styled.div`
   ${mobile({ width: "80%" })}
 `;
 const TextArea = styled.div`
+  margin-top: 2rem;
+
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -36,30 +36,15 @@ const Title = styled.div`
   font-weight: 500;
   ${mobile({ fontSize: "25px" })}
 `;
-const DropdownBtn = styled.div`
-  border: 1px solid #66666659;
-  cursor: pointer;
-  border-radius: 10px;
-  background-color: white;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 15px;
-
-  ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
-`;
-const Icon = styled(FaChevronDown)``;
 
 const DropdownContent = styled.select`
-  width: 100%;
-  box-shadow: 0px 0px 5px 0px grey;
+  width: 80%;
   border-radius: 10px;
   border: 1px solid #66666659;
   background-color: white;
   padding: 12px 5px;
   margin-top: 0.5rem;
-  ${tablet({ width: "100%" })}
+  ${tablet({ width: "50%" })}
 `;
 const DropdownItem = styled.option`
   padding: 10px 20px;

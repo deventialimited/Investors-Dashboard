@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ReferenceData } from "../data";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { mobile } from "../responsive";
@@ -39,16 +38,17 @@ const ReferenceSection = styled.div`
 const TitleArea = styled.div`
   display: flex;
   justify-content: center;
+  text-align: left;
   padding: 10px 0px;
   background-color: #e6eaef80;
   border-bottom: 1px solid #dbdbdb;
 `;
 const Title = styled.a`
   width: 90%;
-  font-size: 15px;
+  font-size: 13px;
   display: grid;
-  place-items: center;
   color: #002a5c;
+  padding: 0px 15px;
   ${tablet({ fontSize: "13px", height: "35px" })}
 
   ${mobile({ fontSize: "10px", height: "24px" })}
@@ -74,7 +74,7 @@ const Bottom = styled.div`
 `;
 const Link = styled.div`
   width: 90%;
-  font-size: 15px;
+  font-size: 13px;
   color: ${({ status }) => {
     switch (status) {
       case "Completed":
@@ -201,15 +201,17 @@ const UserActivity = () => {
       <FormArea>
         <Section>
           <TitleArea>
+            <Title>Referral Link</Title>
+            <Title>Date Referred</Title>
+            <Title>Commission Earned</Title>
             <Title>Links</Title>
           </TitleArea>
           {refs &&
             refs.map((item) => (
               <ReferenceSection key={item.id}>
-                {/* <TitleArea> */}
-                <Title>{item.referralLink}</Title>
-                {/* </TitleArea> */}
-
+                <Bottom>
+                  <Link>{item.referralLink}</Link>
+                </Bottom>
                 <Bottom>
                   <Link>{formatDate(item.createdAt)}</Link>
                 </Bottom>

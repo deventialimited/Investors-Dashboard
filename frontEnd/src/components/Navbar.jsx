@@ -15,6 +15,7 @@ import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../context/userSlice";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
@@ -34,7 +35,7 @@ const Section = styled.div`
   align-items: center;
   ${mobile({ height: "80px" })}
 `;
-const LogoSection = styled.div`
+const LogoSection = styled(Link)`
   width: 40%;
   ${mobile({ width: "40% " })}
 `;
@@ -102,7 +103,7 @@ const Underline = styled.div`
   height: 50%;
   background-color: #88888880;
 `;
-const ProfileSection = styled.div`
+const ProfileSection = styled(Link)`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -183,6 +184,7 @@ const Sec = styled.div`
   margin-top: 1rem;
   width: 90%;
   display: flex;
+
   flex-direction: column;
   gap: 1rem;
 `;
@@ -223,12 +225,48 @@ const Span = styled.a`
 
   ${mobile({ fontSize: "13px" })}
 `;
-const IconSec = styled.span`
+const IconSec = styled(Link)`
+  display: flex;
+  align-items: center;
+  width: 90%;
+  gap: 5px;
+  color: white;
+  font-weight: 200;
+  border-radius: 10px;
+  padding: 10px 10px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: white;
+    color: #ee1d52;
+    transition: all 0.5s ease-in-out;
+  }
+`;
+const ExitSec = styled(Link)`
   display: flex;
   align-items: center;
   width: 90%;
   gap: 5px;
   font-weight: 200;
+  border-radius: 10px;
+  padding: 10px 10px;
+  text-decoration: none;
+  color: white;
+
+  &:hover {
+    background-color: white;
+    color: #ee1d52;
+    transition: all 0.5s ease-in-out;
+  }
+`;
+const ProfileSec = styled(Link)`
+  display: flex;
+  align-items: center;
+  width: 90%;
+  gap: 5px;
+  font-weight: 200;
+  text-decoration: none;
+
   border-radius: 10px;
   padding: 10px 10px;
 
@@ -263,14 +301,13 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    console.log("hit the logout: ");
     dispatch(logout());
   };
 
   return (
     <Container>
       <Section>
-        <LogoSection>
+        <LogoSection to={"/"}>
           <Logo src={LeftLogo} />
         </LogoSection>
         <MidSection>
@@ -290,7 +327,7 @@ const Navbar = () => {
             <IconFour />
           </Icons>
         </IconSection>
-        <ProfileSection>
+        <ProfileSection to={"/profile"}>
           <Underline></Underline>
           <Profile src={UserProfile} />
           <InfoSection>
@@ -307,13 +344,13 @@ const Navbar = () => {
           <Sidebar>
             <Sec>
               <TopLogoIcon>
-                <MidLogo src={CenterLogo} />
+                <MidLogo src={RightLogo} />
                 <CloseIcon onClick={handleExit} />
               </TopLogoIcon>
-              <IconSec>
+              <ProfileSec to={"/profile"}>
                 <Img src={UserProfile} />
-                <Span href="/profile">My Profile</Span>
-              </IconSec>
+                <Span>My Profile</Span>
+              </ProfileSec>
               <IconSec>
                 <IconOne></IconOne>
                 <Span>Payment</Span>
@@ -330,10 +367,10 @@ const Navbar = () => {
                 <IconFour></IconFour>
                 <Span>Notification</Span>
               </IconSec>
-              <IconSec>
+              <ExitSec onClick={handleLogout}>
                 <LastIcon />
-                <Span href="/login">Exit</Span>
-              </IconSec>
+                <Span>Exit</Span>
+              </ExitSec>
             </Sec>
           </Sidebar>
         </Menu>

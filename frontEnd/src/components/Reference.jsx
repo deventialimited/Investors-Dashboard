@@ -82,9 +82,10 @@ const InfoField = styled.div`
   ${mobile({ fontSize: "9px", padding: "10px 10px" })}
 `;
 const InfoLink = styled.div`
-  text-decoration: underline;
   color: #002a5c;
   cursor: pointer;
+  font-size: 15px;
+
   ${mobile({ width: "70%" })}
 `;
 const InfoSection = styled.div`
@@ -122,12 +123,15 @@ const CopyIcon = styled(IoCopyOutline)`
 const ShareIcon = styled(IoShareSocialOutline)`
   width: 24px;
   height: 24px;
+  cursor: pointer;
   ${mobile({ width: "12px", height: "12px" })}
 `;
 const DeleteIcon = styled(RiDeleteBin5Line)`
   width: 24px;
   height: 24px;
   color: #ee1d52;
+  cursor: pointer;
+
   ${mobile({ width: "12px", height: "12px" })}
 `;
 
