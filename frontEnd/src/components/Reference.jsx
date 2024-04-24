@@ -145,7 +145,11 @@ const Reference = () => {
   useEffect(() => {
     const fetchRefs = async () => {
       try {
-        const { data } = await api.get("/referral/get-all-refs")
+        const { data } = await api.get("/referral/get-refs", {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        })
 
         setRefs(data.referrals)
       } catch (error) {
