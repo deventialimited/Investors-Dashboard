@@ -10,8 +10,8 @@ import { FaChevronDown } from "react-icons/fa"
 import { api } from "../axios/axios"
 import { useSelector } from "react-redux"
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Container = styled.div`
   width: 100%;
@@ -121,6 +121,12 @@ const InfoIcon = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 13px;
+
+  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+  }
   ${mobile({ fontSize: "10px", gap: "2px" })}
 `
 const Info = styled.div`
@@ -188,7 +194,7 @@ const Link = () => {
 
   const [referLink, setReferLink] = useState()
 
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user)
 
   const handleGenerateLink = async () => {
     try {
@@ -203,10 +209,15 @@ const Link = () => {
       )
 
       setReferLink(data.referral)
-      toast.success('link generated')
+      toast.success("link generated")
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleCopyLink = (referralLink) => {
+    navigator.clipboard.writeText(referralLink)
+    toast.success("Referral link copied to clipboard")
   }
 
   return (
@@ -220,7 +231,7 @@ const Link = () => {
       </Section>
       <InfoSections>
         <InfoArea>
-          <Infos>
+          {/* <Infos>
             <InfoName>Compaign</InfoName>
             <InfoInput>
               <Dropdown>
@@ -261,24 +272,30 @@ const Link = () => {
           <Text>
             Enter any URL from this website in the form above to generate a
             referral link!
-          </Text>
+          </Text> */}
           <Button onClick={handleGenerateLink}>Generate</Button>
           <EndText>Generated Referral Link</EndText>
           <InfoField>
-            <InfoLink>{referLink ? referLink.referralLink : <>Click generate to get a refer link</>}</InfoLink>
+            <InfoLink>
+              {referLink ? (
+                referLink.referralLink
+              ) : (
+                <>Click generate to get a refer link</>
+              )}
+            </InfoLink>
             <InfoSection>
-              <InfoIcon>
+              <InfoIcon onClick={() => handleCopyLink(referLink.referralLink)}>
                 <Info>Copy</Info>
                 <CopyIcon />
               </InfoIcon>
-              <InfoIcon>
+              {/* <InfoIcon>
                 <Info>Share</Info>
                 <ShareIcon />
               </InfoIcon>
               <InfoIcon>
                 <Info>Add to List</Info>
                 <AddIcon />
-              </InfoIcon>
+              </InfoIcon> */}
             </InfoSection>
           </InfoField>
         </InfoArea>

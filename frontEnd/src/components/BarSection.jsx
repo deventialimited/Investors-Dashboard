@@ -68,7 +68,7 @@ const Text = styled.div`
 
 
 
-const BarSection = () => {
+const BarSection = ({setData}) => {
 
   const [stats, setStats] = useState(null)
   let SectionData = [
@@ -109,6 +109,7 @@ const BarSection = () => {
 
       const { data } = await api.get('/dashboard/get-stats')
       setStats(data)
+      setData(data)
     }
 
     fetchStats()

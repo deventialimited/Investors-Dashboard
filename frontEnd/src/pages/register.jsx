@@ -9,7 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from "react-redux";
 import { setUser } from "../context/userSlice";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -173,6 +174,8 @@ const register = () => {
   const dispatch = useDispatch()  
   const navigate = useNavigate()
 
+  let { ref } = useParams();
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (formData.password !== formData.confirmPassword) {
@@ -185,7 +188,8 @@ const register = () => {
         email: formData.email,
         password: formData.password,
         fullName: formData.fullName,
-        country: formData.country
+        country: formData.country,
+        ref
       })
 
       dispatch(setUser({...data.user, token: data.token}))
@@ -223,7 +227,7 @@ const register = () => {
     setIsActive(false);
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <Container>

@@ -16,7 +16,7 @@ function App() {
         {/* Public Routes */}
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-
+        <Route path='/register/:ref' element={<Register />} />
         {/* Private Routes */}
         {user ? (
           <>

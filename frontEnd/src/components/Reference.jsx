@@ -7,7 +7,8 @@ import { mobile } from "../responsive"
 import { tablet } from "../responsive"
 import { api } from "../axios/axios"
 import { useSelector } from "react-redux"
-import { toast } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const Section = styled.div`
   display: flex;
@@ -85,7 +86,7 @@ const InfoLink = styled.div`
   color: #002a5c;
   cursor: pointer;
   ${mobile({ width: "70%" })}
-`;
+`
 const InfoSection = styled.div`
   display: flex;
   gap: 2rem;
@@ -99,6 +100,11 @@ const InfoIcon = styled.div`
   align-items: center;
   gap: 5px;
   font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+  }
   ${tablet({ fontSize: "12px", gap: "2px" })}
 
   ${mobile({ fontSize: "10px", gap: "2px" })}
@@ -110,6 +116,7 @@ const Info = styled.div`
 const CopyIcon = styled(IoCopyOutline)`
   width: 24px;
   height: 24px;
+  
   ${mobile({ width: "12px", height: "12px" })}
 `
 const ShareIcon = styled(IoShareSocialOutline)`
@@ -126,7 +133,7 @@ const DeleteIcon = styled(RiDeleteBin5Line)`
 
 const Reference = () => {
   const [refs, setRefs] = useState()
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user)
 
   const handleDeleteReferral = async (refId) => {
     try {
@@ -136,10 +143,15 @@ const Reference = () => {
         },
       })
       setRefs(refs.filter((ref) => ref._id !== refId))
-      toast.success('ref deleted')
+      toast.success("ref deleted")
     } catch (error) {
       console.log("error deleting ref: ", error)
     }
+  }
+
+  const handleCopyLink = (referralLink) => {
+    navigator.clipboard.writeText(referralLink)
+    toast.success("Referral link copied to clipboard")
   }
 
   useEffect(() => {
@@ -147,8 +159,8 @@ const Reference = () => {
       try {
         const { data } = await api.get("/referral/get-refs", {
           headers: {
-            Authorization: `Bearer ${user.token}`
-          }
+            Authorization: `Bearer ${user.token}`,
+          },
         })
 
         setRefs(data.referrals)
@@ -164,21 +176,19 @@ const Reference = () => {
 
   return (
     <Section>
+      <ToastContainer />
       <InfoArea>
         <Title>Active Referral Links</Title>
         <Button href='/link'>Generate Referral Link</Button>
       </InfoArea>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. 
-      </Text>
+
       {refs &&
         refs.map((ref) => (
           <InfoPart>
             <InfoField>
               <InfoLink>{ref.referralLink}</InfoLink>
               <InfoSection>
-                <InfoIcon>
+                <InfoIcon onClick={() => handleCopyLink(ref.referralLink)}>
                   <Info>Copy</Info>
                   <CopyIcon />
                 </InfoIcon>

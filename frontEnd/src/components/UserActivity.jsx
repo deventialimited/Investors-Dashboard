@@ -46,6 +46,8 @@ const TitleArea = styled.div`
 const Title = styled.a`
   width: 90%;
   font-size: 15px;
+  display: grid;
+  place-items: center;
   color: #002a5c;
   ${tablet({ fontSize: "13px", height: "35px" })}
 

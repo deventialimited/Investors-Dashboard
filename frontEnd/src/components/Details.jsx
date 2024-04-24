@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Reference from "./Reference";
 import Summary from "./Summary";
@@ -18,14 +18,14 @@ const Right = styled.div`
   flex: 1;
 `;
 
-const Details = () => {
+const Details = ({ data }) => {
   return (
     <Container>
       <Left>
         <Reference />
       </Left>
       <Right>
-        <Summary />
+        <Summary data={data} />
       </Right>
     </Container>
   );
