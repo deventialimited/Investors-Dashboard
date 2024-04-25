@@ -34,7 +34,7 @@ const Section = styled.div`
 const ReferenceSection = styled.div`
   display: flex;
   flex-direction: row;
-  padding-inline: 1rem;
+  padding-inline: 0.7rem;
 `;
 const TitleArea = styled.div`
   display: flex;
@@ -51,6 +51,7 @@ const Title = styled.a`
   display: grid;
   color: #002a5c;
   padding: 0px 15px;
+
   ${tablet({ fontSize: "13px", height: "35px" })}
 
   ${mobile({ fontSize: "10px", height: "24px" })}
@@ -59,15 +60,17 @@ const Bottom = styled.div`
   display: flex;
   height: 30px;
   width: 100%;
-  justify-content: center;
+  justify-content: left;
   border-top: 1px solid #01365914;
-  padding: 12px 0px;
+  padding: 10px 0px;
   ${tablet({ height: "30px" })}
-  ${mobile({ height: "24px", width: "100%" })}
+  ${mobile({ height: "24px", width: "100%", gap: "5px" })}
 `;
 const Link = styled.div`
-  width: 90%;
-  font-size: 13px;
+  width: 100%;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${({ status }) => {
     switch (status) {
       case "Completed":
@@ -82,18 +85,28 @@ const Link = styled.div`
         return "#ee1d52";
     }
   }};
-  @media (max-width: 1180px) {
+  @media (max-width: 1200px) {
     font-size: 12px;
+    width: 90%;
+  }
+  @media (max-width: 1080px) {
+    font-size: 11px;
+    width: 90%;
   }
   ${tablet({
-    fontSize: "11px",
-    width: "100%",
-    padding: "0px 5px",
+    fontSize: "9px",
+    width: "85%",
   })}
-  @media (max-width: 840px) {
-    font-size: 9px;
+  @media (max-width: 760px) {
+    width: 130px;
   }
-  ${mobile({ fontSize: "9px", width: "100%", padding: "0px 0px" })};
+  @media (max-width: 630px) {
+    width: 100px;
+  }
+  ${mobile({ fontSize: "9px", height: "20px", width: "80px" })};
+  @media (max-width: 435px) {
+    width: 70px;
+  }
 `;
 const Pages = styled.div`
   width: 100%;

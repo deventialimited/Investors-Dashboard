@@ -172,11 +172,9 @@ const Sidebar = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
-  border: 1px solid black;
   width: 300px;
   z-index: 999;
   background-image: linear-gradient(to right, #ee1d52, #002a5c);
-  backdrop-filter: blur(10px);
   box-shadow: -10px 0px 10px rgba(0, 0, 0, 0.2);
   display: none;
   flex-direction: column;
@@ -360,7 +358,7 @@ const Navbar = () => {
               </IconSec>
               <IconSec>
                 <IconTwo></IconTwo>
-                <Span>Setting</Span>
+                <Span>Settings</Span>
               </IconSec>
               <IconSec>
                 <IconThree></IconThree>

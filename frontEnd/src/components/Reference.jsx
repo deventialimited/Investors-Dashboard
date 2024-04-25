@@ -52,14 +52,7 @@ const Button = styled.a`
   ${tablet({ fontSize: "11px", padding: "8px 19px" })}
   ${mobile({ fontSize: "9px", padding: "6px 16px" })}
 `;
-const Text = styled.div`
-  width: 95%;
-  font-size: 15px;
-  font-weight: 500;
-  color: #666666;
-  ${tablet({ fontSize: "12px" })}
-  ${mobile({ fontSize: "10px" })}
-`;
+
 const InfoPart = styled.div`
   display: flex;
   align-items: center;
@@ -85,6 +78,9 @@ const InfoLink = styled.div`
   color: #002a5c;
   cursor: pointer;
   font-size: 15px;
+  @media (max-width: 1060px) {
+    font-size: 12px;
+  }
   ${tablet({ width: "70%", fontSize: "11px" })}
 
   ${mobile({ width: "70%" })}
@@ -93,7 +89,10 @@ const InfoSection = styled.div`
   display: flex;
   gap: 2rem;
   color: #ee1d52;
-  ${tablet({ gap: "0.7rem" })}
+  @media (max-width: 1060px) {
+    gap: 1rem;
+  }
+  ${tablet({ gap: "0.3rem" })}
 
   ${mobile({ gap: "0.5rem" })}
 `;
@@ -104,17 +103,23 @@ const InfoIcon = styled.div`
   font-size: 13px;
   cursor: pointer;
 
-  ${tablet({ fontSize: "12px", gap: "2px" })}
-
-  ${mobile({ gap: "2px" })}
+  ${tablet({ fontSize: "12px" })} ${mobile({
+    gap: "2px",
+  })};
 `;
 const Info = styled.div`
   font-size: 13px;
+  @media (max-width: 1060px) {
+    font-size: 12px;
+  }
+  ${tablet({ fontSize: "11px" })}
+
   ${mobile({ display: "none" })}
 `;
 const CopyIcon = styled(IoCopyOutline)`
   width: 24px;
   height: 24px;
+  ${tablet({ width: "12px", height: "12px" })}
 
   ${mobile({ width: "15px", height: "15px" })}
 `;
@@ -122,6 +127,8 @@ const ShareIcon = styled(IoShareSocialOutline)`
   width: 24px;
   height: 24px;
   cursor: pointer;
+  ${tablet({ width: "15px", height: "15px" })}
+
   ${mobile({ width: "15px", height: "15px" })}
 `;
 const DeleteIcon = styled(RiDeleteBin5Line)`
@@ -129,6 +136,7 @@ const DeleteIcon = styled(RiDeleteBin5Line)`
   height: 24px;
   color: #ee1d52;
   cursor: pointer;
+  ${tablet({ width: "15px", height: "15px" })}
 
   ${mobile({ width: "15px", height: "15px" })}
 `;
