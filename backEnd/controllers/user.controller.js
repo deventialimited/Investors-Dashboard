@@ -11,7 +11,8 @@ export const signup = async (req, res, next) => {
     email: Joi.string().email().required(),
     fullName: Joi.string().required(),
     password: Joi.string().required(),
-    country: Joi.string()
+    country: Joi.string(),
+    ref: Joi.string().optional()
   }).validate(req.body)
 
   if (validation.error) {
@@ -21,7 +22,7 @@ export const signup = async (req, res, next) => {
   }
 
   try {
-    const { userName, email, fullName, password, country } = req.body
+    const { userName, email, fullName, password, country, ref } = req.body
 
     
     const existingUser = await User.findOne({ email })
@@ -33,7 +34,7 @@ export const signup = async (req, res, next) => {
 
     let referredBy
 
-    const referralCode = req.query.ref;
+    const referralCode = ref
     if (referralCode) {
       const existingRef = await Referral.findOneAndUpdate(
         { referralCode, status: { $ne: "Completed" } }, // Only search for referrals with the provided code and not already completed
@@ -114,7 +115,7 @@ export const updateUser = async (req, res, next) => {
 
   const validation = Joi.object({
     email: Joi.string().email().optional(),
-    userName: Joi.string().optional(),
+    fullName: Joi.string().optional(),
     country: Joi.string().optional(),
     currentPassword: Joi.string().optional(),
     newPassword: Joi.string().optional(),
@@ -127,7 +128,7 @@ export const updateUser = async (req, res, next) => {
   }
 
   try {
-    const { email, userName, country, currentPassword, newPassword, payoutMethod, bankDetails } = req.body;
+    const { email, fullName, country, currentPassword, newPassword, payoutMethod, bankDetails } = req.body;
 
     const userId = req.user._id
 
@@ -140,8 +141,8 @@ export const updateUser = async (req, res, next) => {
       user.email = email
     }
 
-    if (userName) {
-      user.userName = userName
+    if (fullName) {
+      user.fullName = fullName
     }
 
     if (country) {

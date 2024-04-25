@@ -43,7 +43,9 @@ const Info = styled.div`
   margin-bottom: 5px;
 `;
 
-const Summary = ({ data }) => {
+const Summary = ({data}) => {
+
+
   const SummaryData = [
     { id: 1, title: "Total Referrals:", amount: data?.totalReferrals || "50" },
     { id: 2, title: "Total Earnings:", amount: data?.totalEarning || "$1000" },

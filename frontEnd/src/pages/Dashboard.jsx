@@ -86,7 +86,8 @@ const Span = styled.span`
   ${mobile({ fontSize: "12px" })}
 `;
 const Dashboard = () => {
-  const [data, setData] = useState();
+
+  const [data, setData] = useState()
   return (
     <Container>
       <Navbar />
@@ -104,9 +105,9 @@ const Dashboard = () => {
             </Button>
           </ButtonArea>
         </Header>
-        <BarSection setData={setData} />
+        <BarSection setData={setData}/>
         <ChartSection />
-        <Details data={data} />
+        <Details data={data}/>
         <UserActivity />
         <TransactionHistory />
       </Section>
