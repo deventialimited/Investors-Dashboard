@@ -9,13 +9,14 @@ import { useSelector } from "react-redux";
 
 function App() {
   const user = useSelector((state) => state.user);
+
   return (
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/register/:ref" element={<Register />} />
         {/* Private Routes */}
         {user ? (
           <>

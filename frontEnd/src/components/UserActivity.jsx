@@ -6,7 +6,6 @@ import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { api } from "../axios/axios";
 import { format } from "date-fns";
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -74,7 +73,7 @@ const Bottom = styled.div`
 `;
 const Link = styled.div`
   width: 90%;
-  font-size: 13px;
+  font-size: 15px;
   color: ${({ status }) => {
     switch (status) {
       case "Completed":

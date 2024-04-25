@@ -10,7 +10,7 @@ export const generateRef = async (req, res, next) => {
 
     const refCode = uid.rnd();
 
-    const referralLink = `${process.env.BASE_URL}/signup?ref=${refCode}`;
+    const referralLink = `${process.env.BASE_URL}/register/${refCode}`;
     const status = "Pending";
 
     const referral = await Referral.create({

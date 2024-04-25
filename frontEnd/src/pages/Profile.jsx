@@ -5,7 +5,6 @@ import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { useSelector } from "react-redux";
 import { api } from "../axios/axios";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -26,7 +25,6 @@ const Section = styled.div`
 `;
 const TextArea = styled.div`
   margin-top: 2rem;
-
   display: flex;
   flex-direction: column;
   gap: 2rem;

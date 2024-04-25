@@ -4,7 +4,6 @@ import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { api } from "../axios/axios";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
