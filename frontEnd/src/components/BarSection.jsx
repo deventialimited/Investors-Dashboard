@@ -66,11 +66,8 @@ const Text = styled.div`
   ${mobile({ fontSize: "5px" })}
 `;
 
-
-
-const BarSection = ({setData}) => {
-
-  const [stats, setStats] = useState(null)
+const BarSection = ({ setData }) => {
+  const [stats, setStats] = useState(null);
   let SectionData = [
     {
       id: 1,
@@ -106,15 +103,13 @@ const BarSection = ({setData}) => {
 
   useEffect(() => {
     const fetchStats = async () => {
+      const { data } = await api.get("/dashboard/get-stats");
+      setStats(data);
+      setData(data);
+    };
 
-      const { data } = await api.get('/dashboard/get-stats')
-      setStats(data)
-      setData(data)
-    }
-
-    fetchStats()
-  }, [])
-
+    fetchStats();
+  }, []);
 
   return (
     <Container>

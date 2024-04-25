@@ -4,13 +4,11 @@ import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { api } from "../axios/axios";
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setUser } from "../context/userSlice";
-import { useNavigate, useParams } from 'react-router-dom'
-
+import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -171,35 +169,34 @@ const Button = styled.a`
 const register = () => {
   const [isActive, setIsActive] = useState(false);
 
-  const dispatch = useDispatch()  
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let { ref } = useParams();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      toast.error("passwords do not match!")
+      toast.error("passwords do not match!");
     }
     try {
-
-      const { data } = await api.post('/signup', {
+      const { data } = await api.post("/signup", {
         userName: formData.userName,
         email: formData.email,
         password: formData.password,
         fullName: formData.fullName,
         country: formData.country,
-        ref
-      })
+        ref,
+      });
 
-      dispatch(setUser({...data.user, token: data.token}))
+      dispatch(setUser({ ...data.user, token: data.token }));
 
-      toast.success(data.message || "")
-      navigate('/')
+      toast.success(data.message || "");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const [formData, setFormData] = useState({
     userName: "",
@@ -301,10 +298,7 @@ const register = () => {
           </Fields>
 
           <Fields>
-          <Dropdown
-              value={formData.country}
-              onChange={handleCountrySelect}
-            >
+            <Dropdown value={formData.country} onChange={handleCountrySelect}>
               <DropdownOption value="">Select Country</DropdownOption>
               <DropdownOption value="USA">USA</DropdownOption>
               <DropdownOption value="UK">UK</DropdownOption>

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import { FaChevronDown } from "react-icons/fa";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { useSelector } from "react-redux";
 import { api } from "../axios/axios";
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled.div`
   width: 100%;
@@ -16,7 +14,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
   margin-bottom: 5rem;
 `;
 const Section = styled.div`
@@ -27,6 +24,7 @@ const Section = styled.div`
   ${mobile({ width: "80%" })}
 `;
 const TextArea = styled.div`
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -36,30 +34,18 @@ const Title = styled.div`
   font-weight: 500;
   ${mobile({ fontSize: "25px" })}
 `;
-const DropdownBtn = styled.div`
-  border: 1px solid #66666659;
-  cursor: pointer;
-  border-radius: 10px;
-  background-color: white;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 15px;
-
-  ${mobile({ padding: "10px 10px", borderRadius: "8px", fontSize: "10px" })}
-`;
-const Icon = styled(FaChevronDown)``;
 
 const DropdownContent = styled.select`
-  width: 100%;
-  box-shadow: 0px 0px 5px 0px grey;
+  width: 80%;
   border-radius: 10px;
   border: 1px solid #66666659;
   background-color: white;
   padding: 12px 5px;
   margin-top: 0.5rem;
-  ${tablet({ width: "100%" })}
+  color: #66666699;
+
+  ${tablet({ width: "80%" })}
+  ${mobile({ fontSize: "10px" })}
 `;
 const DropdownItem = styled.option`
   padding: 10px 20px;
@@ -95,6 +81,9 @@ const Name = styled.div`
   padding-bottom: 5px;
   color: #66666699;
   font-size: 12px;
+  ${tablet({ fontSize: "11px" })}
+
+  ${mobile({ fontSize: "9px" })}
 `;
 const NameField = styled.div`
   width: 80%;
@@ -110,13 +99,12 @@ const Field = styled.input`
   font-size: 16px;
   padding: 0px 10px;
   background: transparent;
+  color: #66666699;
   border: none;
   ${tablet({ width: "90%", fontSize: "13px" })}
 
   ${mobile({ width: "90%", fontSize: "10px" })}
 `;
-const CurrencyField = styled.div``;
-
 const ButtonSection = styled.div`
   display: flex;
   width: 40%;
@@ -160,8 +148,7 @@ const Button = styled.div`
 `;
 
 const Profile = () => {
-  const user = useSelector(state => state.user)
-
+  const user = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
     email: user.email || "",
@@ -174,36 +161,38 @@ const Profile = () => {
     bankDetails: user.bankAccountDetails || "",
   });
 
-
   const handleSubmit = async () => {
-
     if (formData.newPassword !== formData.repeatNewPassword) {
-      toast.error('passwords do not match')
-      return
+      toast.error("passwords do not match");
+      return;
     }
 
     try {
-      const res = await api.post('/update-user', {
-        email: formData.email,
-        fullName: formData.fullName,
-        country: formData.country,
-        currentPassword: formData.currentPassword,
-        newPassword: formData.newPassword,
-        payoutMethod: formData.payoutMethod,
-        bankDetails: formData.bankDetails
-      }, {
-        headers: {
-          Authorization: `Bearer ${user.token}`
+      const res = await api.post(
+        "/update-user",
+        {
+          email: formData.email,
+          fullName: formData.fullName,
+          country: formData.country,
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+          payoutMethod: formData.payoutMethod,
+          bankDetails: formData.bankDetails,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
         }
-      })
+      );
 
       console.log("response from update profile: ", res);
-      toast.success('profile updated')
+      toast.success("profile updated");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
-  }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

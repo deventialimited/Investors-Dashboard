@@ -10,7 +10,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-bottom: 5rem;
 `;
 const TopText = styled.div`
   font-size: 20px;
@@ -30,41 +29,75 @@ const FormArea = styled.div`
 const Section = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
 `;
 const ReferenceSection = styled.div`
-  flex: 1.5;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 `;
 const TitleArea = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  text-align: left;
   padding: 10px 0px;
+  border-radius: 25px 25px 0px 0px;
   background-color: #e6eaef80;
   border-bottom: 1px solid #dbdbdb;
+  gap: 0rem;
 `;
-const Title = styled.div`
-  width: 80%;
-  font-size: 14px;
+const Title = styled.a`
+  width: 25%;
+  font-size: 13px;
+  display: grid;
   color: #002a5c;
+  padding: 0px 15px;
+
   ${tablet({ fontSize: "13px", height: "35px" })}
 
   ${mobile({ fontSize: "10px", height: "24px" })}
 `;
-const DataSection = styled.div``;
+
 const Bottom = styled.div`
-  padding: 12px 30px;
+  display: flex;
+  height: 30px;
+  width: 100%;
+  justify-content: center;
   border-top: 1px solid #01365914;
-  ${tablet({ height: "30px", padding: "10px 13px" })}
-  ${mobile({ height: "24px", padding: "10px 13px" })}
+  padding: 12px 15px;
+
+  ${tablet({ height: "30px" })}
+  ${mobile({ height: "24px", width: "100%" })}
 `;
 const Link = styled.div`
-  font-size: 14px;
-  width: 85%;
-  color: #ee1d52;
-  ${tablet({ fontSize: "11px", width: "100%" })}
-  ${mobile({ fontSize: "9px" })}
+  width: 100%;
+  font-size: 13px;
+
+  color: ${({ status }) => {
+    switch (status) {
+      case "Completed":
+        return "green";
+      case "Cancelled":
+        return "red";
+      case "Pending":
+        return "orange";
+      case "Active":
+        return "darkpurple";
+      default:
+        return "#ee1d52";
+    }
+  }};
+  @media (max-width: 1180px) {
+    font-size: 12px;
+  }
+  ${tablet({
+    fontSize: "11px",
+    width: "100%",
+    padding: "0px 5px",
+  })}
+  @media (max-width: 840px) {
+    font-size: 9px;
+  }
+  ${mobile({ fontSize: "9px", width: "100%", padding: "0px 0px" })};
 `;
 const Pages = styled.div`
   width: 100%;
@@ -89,7 +122,6 @@ const RightIcon = styled(MdKeyboardDoubleArrowRight)`
   height: 20px;
   width: 20px;
 `;
-
 const Text = styled.div`
   font-size: 12.52px;
 
@@ -147,29 +179,26 @@ const TransactionHistory = () => {
       <TopText>Transaction History</TopText>
       <FormArea>
         <Section>
+          <TitleArea>
+            <Title>ID</Title>
+            <Title>Date</Title>
+            <Title>Amount</Title>
+            <Title>Status</Title>
+          </TitleArea>
           {TransactionData.map((item) => (
             <ReferenceSection key={item.id}>
-              <TitleArea>
-                <Title>{item.title}</Title>
-              </TitleArea>
-
-              <DataSection>
-                <Bottom>
-                  <Link>{item.dataOne}</Link>
-                </Bottom>
-                <Bottom>
-                  <Link>{item.dataTwo}</Link>
-                </Bottom>
-                <Bottom>
-                  <Link>{item.dataThree}</Link>
-                </Bottom>
-                <Bottom>
-                  <Link>{item.dataFour}</Link>
-                </Bottom>
-                <Bottom>
-                  <Link>{item.dataFive}</Link>
-                </Bottom>
-              </DataSection>
+              <Bottom>
+                <Link>{item.dataOne}</Link>
+              </Bottom>
+              <Bottom>
+                <Link>{item.dataTwo}</Link>
+              </Bottom>
+              <Bottom>
+                <Link>{item.dataThree}</Link>
+              </Bottom>
+              <Bottom>
+                <Link>{item.dataFour}</Link>
+              </Bottom>
             </ReferenceSection>
           ))}
         </Section>

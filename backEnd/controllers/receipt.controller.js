@@ -1,9 +1,8 @@
-import Joi from 'joi'
-import Receipt from '../models/Receipt.model.js'
-import { upload } from '../utils/cloudinay.util.js'
+import Joi from "joi";
+import Receipt from "../models/Receipt.model.js";
+import { upload } from "../utils/cloudinay.util.js";
 
 export const createReceipt = async (req, res) => {
-
   const validation = Joi.object({
     receiptName: Joi.string().required(),
     accountNo: Joi.number().integer().optional(),
@@ -12,17 +11,16 @@ export const createReceipt = async (req, res) => {
     currency: Joi.string().optional(),
     iWillPayAmount: Joi.number().optional(),
     commission: Joi.number().optional(),
-  }).validate(req.body)
+  }).validate(req.body);
 
   if (validation.error) {
     return res
       .status(400)
-      .json({ message: validation.error.details[0].message })
+      .json({ message: validation.error.details[0].message });
   }
 
   try {
-    
-    const { 
+    const {
       receiptName,
       accountNo,
       senderName,
@@ -33,10 +31,10 @@ export const createReceipt = async (req, res) => {
     } = req.body;
 
     if (!req.file) {
-      return res.status(404).json({ message: "receipt is required" })
+      return res.status(404).json({ message: "receipt is required" });
     }
 
-    let receiptImg = await upload(req.file)
+    let receiptImg = await upload(req.file);
 
     const receipt = await Receipt.create({
       receiptName,
@@ -46,14 +44,12 @@ export const createReceipt = async (req, res) => {
       currency,
       iWillPayAmount,
       commission,
-      receiptImg 
-    })
+      receiptImg,
+    });
 
-    return res.status(200).json({receipt})
-
+    return res.status(200).json({ receipt });
   } catch (error) {
     console.log("error createing receipt: ", error);
-    return res.status(500).json({ error: error })
+    return res.status(500).json({ error: error });
   }
-
-}
+};

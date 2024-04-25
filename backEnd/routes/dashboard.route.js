@@ -1,11 +1,9 @@
-import express from 'express'
-import { auth } from '../middlewares/auth.js'
-import { getChartData, getStats } from '../controllers/dashboard.controller.js'
+import express from "express";
+import { auth } from "../middlewares/auth.js";
+import { getStats } from "../controllers/dashboard.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/get-stats', getStats)
-router.get('/get-chart-data', getChartData)
+router.get("/get-stats", getStats);
 
-
-export { router as DashboardRoute }
+export { router as DashboardRoute };

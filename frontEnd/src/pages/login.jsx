@@ -6,8 +6,8 @@ import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { api } from "../axios/axios";
 import { setUser } from "../context/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -180,35 +180,31 @@ const Signup = styled.a`
 `;
 
 const login = () => {
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const [showPass, setShowPass] = useState(false)
+  const [showPass, setShowPass] = useState(false);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
-      
-      const { data } = await api.post('/login', {
+      const { data } = await api.post("/login", {
         email: formData.email,
-        password: formData.password
-      })
+        password: formData.password,
+      });
 
-      dispatch(setUser({...data.user, token: data.token}))
-      toast.success(data.message)
-      navigate('/')
-
+      dispatch(setUser({ ...data.user, token: data.token }));
+      toast.success(data.message);
+      navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
-  }
-
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -219,7 +215,7 @@ const login = () => {
   };
 
   console.log(formData);
- 
+
   return (
     <Container>
       <ToastContainer />
@@ -263,7 +259,7 @@ const login = () => {
                 type={showPass ? `text` : `password`}
                 id="password"
               />
-              <FieldIcon onClick={() => setShowPass(!showPass)}/>
+              <FieldIcon onClick={() => setShowPass(!showPass)} />
             </Fields>
             {/* <Message>Error message</Message> */}
           </FieldSection>
