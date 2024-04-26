@@ -15,7 +15,7 @@ import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../context/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Container = styled.div`
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
@@ -31,7 +31,7 @@ const Section = styled.div`
   height: 112px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   ${mobile({ height: "80px" })}
@@ -47,9 +47,7 @@ const Logo = styled.img`
   opacity: 80%;
   ${mobile({ height: "50px", width: "80px" })}
 `;
-const MidSection = styled.div`
-  margin-right: 3rem;
-`;
+
 const MidLogo = styled.img`
   height: 70px;
   width: 70px;
@@ -102,7 +100,7 @@ const IconFour = styled(IoNotificationsOutline)`
 `;
 const Underline = styled.div`
   width: 2px;
-  height: 50%;
+  height: 100%;
   background-color: #88888880;
 `;
 const ProfileSection = styled(Link)`
@@ -243,6 +241,10 @@ const IconSec = styled(Link)`
     transition: all 0.5s ease-in-out;
   }
 `;
+const Secc = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 const ExitSec = styled(Link)`
   display: flex;
   align-items: center;
@@ -287,7 +289,6 @@ const LastIcon = styled(MdOutlineExitToApp)`
 
   ${mobile({ height: "20px", width: "20px" })}
 `;
-
 const Navbar = () => {
   const handleMenu = () => {
     const sidebar = document.querySelector(Sidebar);
@@ -297,7 +298,6 @@ const Navbar = () => {
     const sidebar = document.querySelector(Sidebar);
     sidebar.style.display = "none";
   };
-
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -310,34 +310,35 @@ const Navbar = () => {
       <Section>
         <LogoSection to={"/"}>
           <Logo src={LeftLogo} />
-        </LogoSection>
-        <MidSection>
           <MidLogo src={CenterLogo} />
-        </MidSection>
-        <IconSection>
-          <Icons>
-            <IconOne />
-          </Icons>
-          <Icons>
-            <IconTwo />
-          </Icons>
-          <Icons>
-            <IconThree />
-          </Icons>
-          <Icons>
-            <IconFour />
-          </Icons>
-        </IconSection>
-        <ProfileSection to={"/profile"}>
-          <Underline></Underline>
-          <Profile src={UserProfile} />
-          <InfoSection>
-            <Name>{user ? <>{user.fullName}</> : <>Thomas</>}</Name>
-            <User>User</User>
-          </InfoSection>
-          <ExitIcon onClick={handleLogout} />
-        </ProfileSection>
-        <ShopLogo src={RightLogo} />
+          <ShopLogo src={RightLogo} />
+        </LogoSection>
+
+        <Secc>
+          <IconSection>
+            <Icons>
+              <IconOne />
+            </Icons>
+            <Icons>
+              <IconTwo />
+            </Icons>
+            <Icons>
+              <IconThree />
+            </Icons>
+            <Icons>
+              <IconFour />
+            </Icons>
+          </IconSection>
+          <ProfileSection to={"/profile"}>
+            <Underline></Underline>
+            <Profile src={UserProfile} />
+            <InfoSection>
+              <Name>{user ? <>{user.fullName}</> : <>Thomas</>}</Name>
+              <User>User</User>
+            </InfoSection>
+            <ExitIcon onClick={handleLogout} />
+          </ProfileSection>
+        </Secc>
         <Menu>
           <Hamburger>
             <MenuIcon onClick={handleMenu}></MenuIcon>
