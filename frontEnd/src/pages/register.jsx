@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setUser } from "../context/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { MdVisibilityOff } from "react-icons/md";
+
 
 const Container = styled.div`
   background-image: linear-gradient(170deg, #ee1d52, #9f2155, #002a5c);
@@ -166,13 +168,24 @@ const Button = styled.a`
   ${mobile({ width: "30%", height: "30px", fontSize: "10px" })}
 `;
 
+const FieldIcon = styled(MdVisibilityOff)`
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  ${mobile({ height: "15px", width: "15px" })}
+`;
+
 const register = () => {
   const [isActive, setIsActive] = useState(false);
+  const [showPass,setShowPass] = useState(false)
+  const [showConfirmPass, setShowConfirmPass] = useState(false)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   let { ref } = useParams();
+
+  console.log(ref)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -194,6 +207,7 @@ const register = () => {
       toast.success(data.message || "");
       navigate("/");
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log(error);
     }
   };
@@ -276,12 +290,13 @@ const register = () => {
               placeholder="Password"
               required
               autoComplete="off"
-              type="text"
+              type={showPass ? "text" : `password`}
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
             />
+            <FieldIcon onClick={() => setShowPass(!showPass)} />
           </Fields>
 
           <Fields>
@@ -289,22 +304,22 @@ const register = () => {
               placeholder="Confirm password"
               required
               autoComplete="off"
-              type="text"
+              type={showConfirmPass ? "text" : `password`}
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
+              
             />
+            <FieldIcon onClick={() => setShowConfirmPass(!showPass)} />
           </Fields>
 
           <Fields>
             <Dropdown value={formData.country} onChange={handleCountrySelect}>
               <DropdownOption value="">Select Country</DropdownOption>
-              <DropdownOption value="USA">USA</DropdownOption>
-              <DropdownOption value="UK">UK</DropdownOption>
-              <DropdownOption value="Canada">Canada</DropdownOption>
-              <DropdownOption value="Australia">Australia</DropdownOption>
-              <DropdownOption value="Germany">Germany</DropdownOption>
+              <DropdownOption value="Philipines">Philipines</DropdownOption>
+              <DropdownOption value="UAE">UAE</DropdownOption>
+              <DropdownOption value="Japan">Japan</DropdownOption>
             </Dropdown>
           </Fields>
         </FieldSection>

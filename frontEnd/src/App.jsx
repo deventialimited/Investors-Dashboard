@@ -6,6 +6,8 @@ import Link from "./pages/Link";
 import CashIn from "./pages/CashIn";
 import Profile from "./pages/Profile";
 import { useSelector } from "react-redux";
+import NotFound from "./pages/404NotFound";
+
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -24,6 +26,7 @@ function App() {
             <Route path="/link" element={<Link />} />
             <Route path="/cashIn" element={<CashIn />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
           </>
         ) : (
           <Route path="*" element={<Navigate to="/login" replace />} />

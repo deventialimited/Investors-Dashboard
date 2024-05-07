@@ -8,6 +8,7 @@ import User from "../models/User.model.js";
 import jwt from "jsonwebtoken";
 import { upload } from "../utils/cloudinay.util.js";
 import Referral from "../models/Referral.model.js";
+import { sendMail } from "../services/email.js";
 
 export const signup = async (req, res, next) => {
   const validation = Joi.object({
@@ -16,6 +17,7 @@ export const signup = async (req, res, next) => {
     fullName: Joi.string().required(),
     password: Joi.string().required(),
     country: Joi.string(),
+    ref: Joi.string().optional()
   }).validate(req.body);
 
   if (validation.error) {
@@ -25,7 +27,7 @@ export const signup = async (req, res, next) => {
   }
 
   try {
-    const { userName, email, fullName, password, country } = req.body;
+    const { userName, email, fullName, password, country, ref } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser !== null) {
@@ -36,7 +38,10 @@ export const signup = async (req, res, next) => {
 
     let referredBy;
 
-    const referralCode = req.query.ref;
+    const referralCode = ref || req.query.ref;
+
+    console.log("refferal code: ", referralCode);
+
     if (referralCode) {
       const existingRef = await Referral.findOneAndUpdate(
         { referralCode, status: { $ne: "Completed" } }, // Only search for referrals with the provided code and not already completed
@@ -77,6 +82,8 @@ export const signup = async (req, res, next) => {
     const token = jwt.sign({ _id: user._id, email }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
+
+    await sendMail(user.fullName)
 
     return res.status(200).json({ user, token, message: "signup successfull" });
   } catch (error) {
