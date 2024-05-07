@@ -71,31 +71,31 @@ const BarSection = ({ setData }) => {
   let SectionData = [
     {
       id: 1,
-      amount: `$${stats?.totalEarning}`,
+      amount: `$${stats?.totalEarning || 0}`,
       title: "Total Earning",
       color: "#75C37D",
     },
     {
       id: 2,
-      amount: `$${stats?.totalCashIn}`,
+      amount: `$${stats?.totalCashIn || 0}`,
       title: "Total Cash-In",
       color: "#FFA726",
     },
     {
       id: 3,
-      amount: `$${stats?.totalEarning}`,
+      amount: `$${stats?.totalEarning || 0}`,
       title: "Total Cash-Out",
       color: "#F25A68",
     },
     {
       id: 4,
-      amount: `$${stats?.totalCommission}`,
+      amount: `$${stats?.totalCommission || 0}`,
       title: "Total Commission",
       color: "#4285F4",
     },
     {
       id: 5,
-      amount: `${stats?.totalReferrals}`,
+      amount: `${stats?.totalReferrals || 0}`,
       title: "Total Referrals",
       color: "#E9734E",
     },
