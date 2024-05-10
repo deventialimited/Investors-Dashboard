@@ -15,7 +15,7 @@ import { SlMenu } from "react-icons/sl";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../context/userSlice";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-image: linear-gradient(to right, #ee1d52e3, #002a5ce3);
@@ -38,20 +38,31 @@ const Section = styled.div`
 `;
 
 const LogoSection = styled(Link)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 40%;
   ${mobile({ width: "40% " })}
 `;
 const Logo = styled.img`
   height: 73px;
-  width: 115px;
+  width: 100px;
   opacity: 80%;
-  ${mobile({ height: "50px", width: "80px" })}
+  ${tablet({ height: "80px", width: "90px" })}
+
+  ${mobile({ height: "60px", width: "80px" })}
 `;
 
 const MidLogo = styled.img`
   height: 70px;
   width: 70px;
-  ${mobile({ height: "60px", width: "60px" })}
+  ${mobile({ height: "50px", width: "50px" })}
+`;
+const ShopLogo = styled.img`
+  height: 79px;
+  width: 87px;
+  opacity: 80%;
+  ${mobile({ height: "50px", width: "80px" })}
 `;
 const IconSection = styled.div`
   display: flex;
@@ -142,13 +153,7 @@ const ExitIcon = styled(MdOutlineExitToApp)`
   ${mobile({ display: "none", height: "25px", width: "25px" })}
   ${tablet({ display: "none" })}
 `;
-const ShopLogo = styled.img`
-  height: 79px;
-  width: 87px;
-  opacity: 80%;
-  ${tablet({ display: "none" })}
-  ${mobile({ display: "none" })}
-`;
+
 const Menu = styled.div``;
 const Hamburger = styled.div`
   margin-bottom: 1rem;
@@ -346,7 +351,6 @@ const Navbar = () => {
           <Sidebar>
             <Sec>
               <TopLogoIcon>
-                <MidLogo src={RightLogo} />
                 <CloseIcon onClick={handleExit} />
               </TopLogoIcon>
               <ProfileSec to={"/profile"}>
