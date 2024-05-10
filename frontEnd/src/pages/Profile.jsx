@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import { MdVisibilityOff } from "react-icons/md";
+
 import { tablet } from "../responsive";
 import { useSelector } from "react-redux";
 import { api } from "../axios/axios";
@@ -36,7 +38,7 @@ const Title = styled.div`
 `;
 
 const DropdownContent = styled.select`
-  width: 80%;
+  width: 82%;
   border-radius: 10px;
   border: 1px solid #66666659;
   background-color: white;
@@ -86,12 +88,21 @@ const Name = styled.div`
   ${mobile({ fontSize: "9px" })}
 `;
 const NameField = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 12px;
   width: 80%;
   height: 3rem;
   background-color: white;
   border: 1px solid #c8c8c8;
   border-radius: 12px;
   ${mobile({ height: "2rem", borderRadius: "8px" })}
+`;
+const FieldIcon = styled(MdVisibilityOff)`
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  ${mobile({ height: "15px", width: "15px" })}
 `;
 const Field = styled.input`
   width: 97%;
@@ -149,6 +160,7 @@ const Button = styled.div`
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
+  const [showPass, setShowPass] = useState(false);
 
   const [formData, setFormData] = useState({
     email: user.email || "",
@@ -248,10 +260,9 @@ const Profile = () => {
               onChange={handleChange}
             >
               <DropdownItem value="">Select Country</DropdownItem>
-              <DropdownItem value="USA">USA</DropdownItem>
-              <DropdownItem value="UK">UK</DropdownItem>
-              <DropdownItem value="Canada">Canada</DropdownItem>
-              <DropdownItem value="Australia">Australia</DropdownItem>
+              <DropdownItem value="Philippines">Philippines</DropdownItem>
+              <DropdownItem value="Japan">Japan</DropdownItem>
+              <DropdownItem value="UAE">UAE</DropdownItem>
             </DropdownContent>
           </InfoBoxes>
           <InfoBoxes>
@@ -259,43 +270,47 @@ const Profile = () => {
             <InfoBox>
               <NameField>
                 <Field
-                  type="currentPassword"
+                  id="password"
+                  type={showPass ? `text` : `password`}
                   name="currentPassword"
                   value={formData.currentPassword}
                   onChange={handleChange}
                   required
                   autoComplete="off"
                   placeholder="Current Password"
-                ></Field>
-                <Name style={{ textAlign: "right" }}>
-                  we need your current password to confirm your changes
-                </Name>
+                />
+                <FieldIcon onClick={() => setShowPass(!showPass)} />
               </NameField>
+              <Name style={{ textAlign: "right", width: "80%" }}>
+                we need your current password to confirm your changes
+              </Name>
             </InfoBox>
             <InfoBox>
               <NameField>
                 <Field
-                  type="password"
+                  type={showPass ? `text` : `password`}
                   name="newPassword"
                   required
                   value={formData.newPassword}
                   onChange={handleChange}
                   autoComplete="off"
                   placeholder="New Password"
-                ></Field>
+                />{" "}
+                <FieldIcon onClick={() => setShowPass(!showPass)} />
               </NameField>
             </InfoBox>
             <InfoBox>
               <NameField>
                 <Field
-                  type="password"
+                  type={showPass ? `text` : `password`}
                   name="repeatNewPassword"
                   required
                   value={formData.repeatNewPassword}
                   onChange={handleChange}
                   autoComplete="off"
-                  placeholder="New Password"
-                ></Field>
+                  placeholder="Repeat New Password"
+                />
+                <FieldIcon onClick={() => setShowPass(!showPass)} />
               </NameField>
             </InfoBox>
           </InfoBoxes>

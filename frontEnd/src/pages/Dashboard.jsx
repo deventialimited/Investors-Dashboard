@@ -18,6 +18,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  margin-bottom: 5rem;
 `;
 const Section = styled.div`
   width: 93%;
