@@ -4,7 +4,7 @@ import { upload } from "../utils/cloudinay.util.js";
 
 export const createReceipt = async (req, res) => {
   const validation = Joi.object({
-    receiptName: Joi.string().required(),
+    receiptName: Joi.string().optional(),
     accountNo: Joi.number().integer().optional(),
     senderName: Joi.string().required(),
     referenceNo: Joi.string().optional(),
@@ -14,9 +14,7 @@ export const createReceipt = async (req, res) => {
   }).validate(req.body);
 
   if (validation.error) {
-    return res
-      .status(400)
-      .json({ message: validation.error.details[0].message });
+    return res.status(400).json({ message: validation.error.details[0].message });
   }
 
   try {
@@ -31,12 +29,17 @@ export const createReceipt = async (req, res) => {
     } = req.body;
 
     if (!req.file) {
-      return res.status(404).json({ message: "receipt is required" });
+      return res.status(404).json({ message: "Receipt image is required" });
     }
+
+    // Access userId from authenticated user
+    const userId = req.user._id;
 
     let receiptImg = await upload(req.file);
 
+    // Create receipt including userId
     const receipt = await Receipt.create({
+      user: userId,
       receiptName,
       accountNo,
       senderName,
@@ -49,7 +52,27 @@ export const createReceipt = async (req, res) => {
 
     return res.status(200).json({ receipt });
   } catch (error) {
-    console.log("error createing receipt: ", error);
-    return res.status(500).json({ error: error });
+    console.log("Error creating receipt: ", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+export const getReceiptsByUserId = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const receipts = await Receipt.find({ user: userId });
+
+    if (!receipts.length) {
+      return res.status(404).json({ message: "No receipts found for this user." });
+    }
+
+    const totalCommission = receipts.reduce((acc, receipt) => acc + receipt.commission, 0);
+
+    return res.status(200).json({ receipts, totalCommission });
+  } catch (error) {
+    console.error("Error fetching receipts: ", error);
+    return res.status(500).json({ error: "Server error" });
   }
 };

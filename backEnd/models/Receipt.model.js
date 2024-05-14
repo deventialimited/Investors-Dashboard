@@ -1,45 +1,48 @@
-import mongoose from "mongoose"
-const { Schema } = mongoose
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const receiptSchema = new Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     receiptName: {
       type: String,
-      required: true
     },
     accountNo: {
-      type: Number
+      type: Number,
     },
     senderName: {
-      type:String,
-      required: true
+      type: String,
     },
     referenceNo: {
       type: String,
     },
     currency: {
-      type: String
+      type: String,
     },
     iWillPayAmount: {
-      type: Number
+      type: Number,
     },
     commission: {
-      type: Number
+      type: Number,
     },
     receiptImg: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
     toJSON: {
       transform(doc, ret) {
-        delete ret.__v
+        delete ret.__v;
       },
     },
     timestamps: true,
   }
-)
+);
 
-const Receipt = mongoose.model("Receipt", receiptSchema)
+const Receipt = mongoose.model("Receipt", receiptSchema);
 
-export default Receipt
+export default Receipt;

@@ -6,6 +6,7 @@ import { mobile } from "../responsive";
 import { tablet } from "../responsive";
 import { api } from "../axios/axios";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -184,20 +185,28 @@ const BoxFour = styled.a`
 
 const UserActivity = () => {
   const [refs, setRefs] = useState();
+    const user = useSelector((state) => state.user);
 
   const formatDate = (date) => format(new Date(date), "dd MMM yyyy");
 
   useEffect(() => {
     const fetchRefs = async () => {
       try {
-        const { data } = await api.get("/referral/get-all-refs");
+        const { data } = await api.get("/referral/get-refs", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
         setRefs(data.referrals);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchRefs();
   }, []);
+
 
   console.log("refs: ", refs);
 
@@ -209,7 +218,7 @@ const UserActivity = () => {
           <TitleArea>
             <Title>Referral Link</Title>
             <Title>Date Referred</Title>
-            <Title>Commission Earned</Title>
+            <Title>Referral code</Title>
             <Title>Links</Title>
           </TitleArea>
           {refs &&
@@ -222,7 +231,7 @@ const UserActivity = () => {
                   <Link>{formatDate(item.createdAt)}</Link>
                 </Bottom>
                 <Bottom>
-                  <Link>{item.dataTwo}</Link>
+                  <Link>{item.referralCode}</Link>
                 </Bottom>
                 <Bottom>
                   <Link status={item.status}>{item.status}</Link>

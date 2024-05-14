@@ -1,6 +1,8 @@
 import Referral from "../models/Referral.model.js";
 import ShortUniqueId from "short-unique-id";
 import mongoose from "mongoose";
+import Receipt from "../models/Receipt.model.js";
+
 
 const uid = new ShortUniqueId();
 
@@ -51,17 +53,21 @@ export const getRefs = async (req, res) => {
     const referrals = await Referral.find({ user: userId });
 
     if (!referrals.length) {
-      return res
-        .status(404)
-        .json({ message: "referrals not found for the user" });
+      return res.status(404).json({ message: "Referrals not found for the user" });
     }
 
-    return res.status(200).json({ referrals });
+    const receipts = await Receipt.find({ user: userId });
+
+    const totalCommission = receipts.reduce((acc, receipt) => acc + receipt.commission, 0);
+
+    console.log("totalCommission",totalCommission,referrals)
+    return res.status(200).json({ referrals, totalCommission });
   } catch (error) {
-    console.log("error getting  refs: ", error);
+    console.log("Error getting referrals: ", error);
     return res.status(500).json({ error: error });
   }
 };
+
 
 export const deleteRef = async (req, res) => {
   try {
@@ -80,5 +86,43 @@ export const deleteRef = async (req, res) => {
   } catch (error) {
     console.log("error deleting ref: ", error);
     return res.status(500).json({ error: error });
+  }
+};
+
+export const getAllactivities = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+  
+    const referrals = await Referral.find({ user: userId });
+
+    const totalReferrals = referrals.length;
+
+
+    const pendingReferrals = referrals.filter(
+      (referral) => referral.status === "Pending"
+    ).length;
+
+    const totalCommissionAggregate = await Receipt.aggregate([
+      { $match: { user: userId } },
+      { $group: { _id: null, total: { $sum: "$commission" } } },
+    ]);
+
+   
+    const totalCommission = totalCommissionAggregate.length
+      ? totalCommissionAggregate[0].total
+      : 0;
+
+    const response = {
+      totalReferrals,
+      pendingReferrals,
+      totalCommission,
+      referrals,
+    };
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log("Error getting referrals: ", error);
+    return res.status(500).json({ error: "Server error" });
   }
 };

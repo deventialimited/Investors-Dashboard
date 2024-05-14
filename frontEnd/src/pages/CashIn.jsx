@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import UploadImage from "../assets/uploadimage.png";
-import { mobile } from "../responsive";
-import { tablet } from "../responsive";
+import { mobile, tablet } from "../responsive";
 import { useSelector } from "react-redux";
 import { api } from "../axios/axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,6 +16,7 @@ const Container = styled.div`
   align-items: center;
   margin-bottom: 5rem;
 `;
+
 const Section = styled.div`
   width: 90%;
   display: flex;
@@ -24,6 +24,7 @@ const Section = styled.div`
   gap: 3rem;
   ${mobile({ width: "80%" })}
 `;
+
 const TextArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,6 +32,7 @@ const TextArea = styled.div`
   width: 100%;
   margin-top: 2rem;
 `;
+
 const Title = styled.div`
   font-size: 36px;
   font-weight: 500;
@@ -42,6 +44,7 @@ const Form = styled.form`
   flex-direction: column;
   gap: 2rem;
 `;
+
 const InfoBoxes = styled.div`
   background-color: #fde8ee80;
   border-radius: 15px;
@@ -50,17 +53,21 @@ const InfoBoxes = styled.div`
   flex-direction: column;
   gap: 2rem;
 `;
+
 const FormText = styled.div`
   font-size: 26px;
   font-weight: 500;
   ${mobile({ fontSize: "16px" })}
 `;
+
 const InfoBox = styled.div``;
+
 const Name = styled.div`
   padding-bottom: 5px;
   font-size: 16px;
   ${mobile({ fontSize: "12px" })}
 `;
+
 const NameField = styled.div`
   width: 80%;
   height: 3rem;
@@ -70,6 +77,7 @@ const NameField = styled.div`
   border-radius: 12px;
   ${mobile({ height: "2rem", borderRadius: "8px" })}
 `;
+
 const DropdownContent = styled.select`
   width: 100%;
   height: 100%;
@@ -82,6 +90,7 @@ const DropdownContent = styled.select`
 
   ${mobile({ padding: "5px 15px", fontSize: "9px" })}
 `;
+
 const DropdownItem = styled.option`
   padding: 10px 20px;
   cursor: pointer;
@@ -89,6 +98,7 @@ const DropdownItem = styled.option`
     background: #f4f4f4;
   }
 `;
+
 const Field = styled.input`
   width: 100%;
   height: 100%;
@@ -107,6 +117,7 @@ const ButtonSection = styled.div`
   width: 35%;
   gap: 1rem;
 `;
+
 const Button = styled.div`
   width: 40%;
   border-radius: 40px;
@@ -139,10 +150,12 @@ const Button = styled.div`
     fontWeight: "400",
   })}
 `;
+
 const Image = styled.img`
   width: 20%;
   margin-top: 2rem;
 `;
+
 const CashIn = () => {
   const bankOptions = {
     GCASH: {
@@ -183,15 +196,17 @@ const CashIn = () => {
       ...prevData,
       [name]: value,
     }));
-    setSelectedBank(e.target.value);
+    if (name === "payoutMethod") {
+      setSelectedBank(value);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formDataToSubmit = new FormData();
-    formDataToSubmit.append("receiptName", formData.receiptName);
-    formDataToSubmit.append("accountNo", formData.accountNo);
+    // formDataToSubmit.append("receiptName", formData.receiptName);
+    // formDataToSubmit.append("accountNo", formData.accountNo);
     formDataToSubmit.append("senderName", formData.senderName);
     formDataToSubmit.append("referenceNo", formData.referenceNo);
     formDataToSubmit.append("currency", formData.currency);
@@ -210,11 +225,11 @@ const CashIn = () => {
         }
       );
 
-      toast.success("receipt created successfully");
+      toast.success("Receipt created successfully");
 
       setFormData({
-        receiptName: "",
-        accountNo: "",
+        // receiptName: "",
+        // accountNo: "",
         senderName: "",
         referenceNo: "",
         currency: "",
@@ -226,6 +241,20 @@ const CashIn = () => {
       console.log(error);
       toast.error(error.response.data.message);
     }
+  };
+
+  const handleClear = () => {
+    setFormData({
+      // receiptName: "",
+      // accountNo: "",
+      senderName: "",
+      referenceNo: "",
+      currency: "",
+      iWillPayAmount: "",
+      commission: "",
+    });
+    setSelectedFile(null);
+    setSelectedBank("GCASH");
   };
 
   const inlineStyling = {
@@ -242,6 +271,7 @@ const CashIn = () => {
     borderRight: "1px solid #c8c8c8",
     backgroundColor: "#f2f2f7",
   };
+
   return (
     <Container>
       <ToastContainer />
@@ -256,10 +286,9 @@ const CashIn = () => {
               value={selectedBank}
               onChange={handleInputChange}
             >
-              {" "}
               {Object.keys(bankOptions).map((bank) => (
                 <DropdownItem key={bank} value={bank}>
-                  {bank}{" "}
+                  {bank}
                 </DropdownItem>
               ))}
             </DropdownContent>
@@ -325,34 +354,21 @@ const CashIn = () => {
               <Name>Select Currency</Name>
               <NameField>
                 <DropdownContent
-                  name="country"
-                  value={formData.payoutMethod}
+                  name="currency"
+                  value={formData.currency}
                   onChange={handleInputChange}
                   style={inlineStyle}
                 >
-                  <DropdownItem onChange={handleInputChange} value="CAD">
-                    Canadian Dollar (C$)
-                  </DropdownItem>
-                  <DropdownItem onChange={handleInputChange} value="USD">
-                    US Dollar ($)
-                  </DropdownItem>
-                  <DropdownItem onChange={handleInputChange} value="AED">
-                    UAE Dirham (AED)
-                  </DropdownItem>
-                  <DropdownItem onChange={handleInputChange} value="PKR">
-                    Pakistani Rupee (PKR)
-                  </DropdownItem>
-                  <DropdownItem onChange={handleInputChange} value="INR">
-                    Indian Rupee (INR)
-                  </DropdownItem>
-                  <DropdownItem onChange={handleInputChange} value="EUR">
-                    Euro (€)
-                  </DropdownItem>
-                  <DropdownItem onChange={handleInputChange} value="PHP">
+                  <DropdownItem value="CAD">Canadian Dollar (C$)</DropdownItem>
+                  <DropdownItem value="USD">US Dollar ($)</DropdownItem>
+                  <DropdownItem value="AED">UAE Dirham (AED)</DropdownItem>
+                  <DropdownItem value="PKR">Pakistani Rupee (PKR)</DropdownItem>
+                  <DropdownItem value="INR">Indian Rupee (INR)</DropdownItem>
+                  <DropdownItem value="EUR">Euro (€)</DropdownItem>
+                  <DropdownItem value="PHP">
                     Philippine Peso (₱)
                   </DropdownItem>
                 </DropdownContent>
-
                 <Field
                   type="text"
                   name="currency"
@@ -393,7 +409,7 @@ const CashIn = () => {
               </NameField>
             </InfoBox>
             <InfoBox>
-              <Name>Upload Reciept</Name>
+              <Name>Upload Receipt</Name>
               <NameField>
                 <Field
                   type="file"
@@ -412,7 +428,9 @@ const CashIn = () => {
             </InfoBox>
           </InfoBoxes>
           <ButtonSection>
-            <Button style={inlineStyling}>Clear</Button>
+            <Button style={inlineStyling} onClick={handleClear}>
+              Clear
+            </Button>
             <Button onClick={handleSubmit}>Submit</Button>
           </ButtonSection>
         </Form>
@@ -420,4 +438,5 @@ const CashIn = () => {
     </Container>
   );
 };
+
 export default CashIn;

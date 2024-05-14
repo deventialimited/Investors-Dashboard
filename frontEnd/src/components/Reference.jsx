@@ -182,7 +182,7 @@ const Reference = () => {
     fetchRefs();
   }, []);
 
-  // console.log(refs);
+  console.log(refs);
 
   return (
     <Section>
