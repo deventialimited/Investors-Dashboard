@@ -76,3 +76,31 @@ export const getReceiptsByUserId = async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 };
+
+
+
+export const TotalCommission =async(req,res)=>{
+  try {
+    const userId = req.user.id; // Assuming req.user is set by authenticateToken middleware
+    const totalCommission = await Receipt.aggregate([
+      { $match: { user: userId } },
+      {
+        $group: {
+          _id: null,
+          totalCommission: { $sum: '$commission' },
+        },
+      },
+    ]);
+
+    if (!totalCommission.length) {
+      return res.status(404).json({ message: 'No commissions found' });
+    }
+
+    res.status(200).json({ totalCommission: totalCommission[0].totalCommission });
+  } catch (error) {
+    console.error('Error fetching total commission:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+}
+

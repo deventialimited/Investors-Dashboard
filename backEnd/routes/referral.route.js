@@ -4,8 +4,9 @@ import {
   deleteRef,
   getRefs,
   getAllRefs,
-  getAllactivities
-
+  getAllactivities,
+  TotalRefferal,
+ 
 } from "../controllers/referral.controller.js";
 import { auth } from "../middlewares/auth.js";
 
@@ -16,5 +17,7 @@ router.delete("/delete-ref/:id", auth, deleteRef);
 router.get("/get-refs", auth, getRefs);
 router.get("/get-all-refs", getAllRefs);
 router.get("/getAllactivities",auth,getAllactivities);
+router.get("/TotalRefferal",auth,TotalRefferal)
+
 
 export { router as ReferralRoute };

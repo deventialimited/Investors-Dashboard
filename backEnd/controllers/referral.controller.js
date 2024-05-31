@@ -29,6 +29,25 @@ export const generateRef = async (req, res, next) => {
   }
 };
 
+
+export const TotalRefferal =async (req,res) =>{
+  try {
+    const userId = req.user._id;
+
+    const totalReferrals = await Referral.countDocuments({ user: userId });
+
+   
+    return res.status(200).json({ totalReferrals });
+  } catch (error) {
+    console.error("Error getting total referrals: ", error);
+    return res.status(500).json({ error: error.message });
+  }
+
+}
+
+
+
+
 export const getAllRefs = async (req, res) => {
   try {
     const referrals = await Referral.find({});
@@ -50,23 +69,29 @@ export const getRefs = async (req, res) => {
   try {
     const userId = req.user._id;
 
+    // Fetch referrals associated with the user
     const referrals = await Referral.find({ user: userId });
 
     if (!referrals.length) {
       return res.status(404).json({ message: "Referrals not found for the user" });
     }
 
+    // Fetch receipts associated with the user
     const receipts = await Receipt.find({ user: userId });
 
+    // Calculate total commission
     const totalCommission = receipts.reduce((acc, receipt) => acc + receipt.commission, 0);
 
-    console.log("totalCommission",totalCommission,referrals)
+    console.log("totalCommission", totalCommission, referrals);
+
+    // Return referrals and total commission
     return res.status(200).json({ referrals, totalCommission });
   } catch (error) {
-    console.log("Error getting referrals: ", error);
-    return res.status(500).json({ error: error });
-  }
-};
+    console.error("Error getting referrals: ", error);
+    return res.status(500).json({ error: error.message });
+  
+}
+}
 
 
 export const deleteRef = async (req, res) => {

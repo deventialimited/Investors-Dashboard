@@ -7,7 +7,7 @@ import { tabletPro } from "../responsive";
 import { tabletMini } from "../responsive";
 import { samsungTab } from "../responsive";
 import { api } from "../axios/axios";
-
+import { useSelector } from "react-redux";
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -67,49 +67,87 @@ const Text = styled.div`
 `;
 
 const BarSection = ({ setData }) => {
+
+  const user = useSelector((state) => state.user);
   const [stats, setStats] = useState(null);
+  const [totalReferrals, setTotalReferrals] = useState(0);
+
+  
+
+  useEffect(() => {
+    const fetchTotalReferrals = async () => {
+      try {
+
+
+        const { data } = await api.get("/referral/TotalRefferal", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        setTotalReferrals(data.totalReferrals);
+      } catch (error) {
+        setError('Failed to fetch total referrals');
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchTotalReferrals();
+  }, []);
+
+
   let SectionData = [
     {
       id: 1,
-      amount: `$${stats?.totalEarning || 0}`,
+     
       title: "Total Earning",
       color: "#75C37D",
     },
     {
       id: 2,
-      amount: `$${stats?.totalCashIn || 0}`,
+    
       title: "Total Cash-In",
       color: "#FFA726",
     },
     {
       id: 3,
-      amount: `$${stats?.totalEarning || 0}`,
+      amount: `$${0}`,
       title: "Total Cash-Out",
       color: "#F25A68",
     },
     {
       id: 4,
-      amount: `$${stats?.totalCommission || 0}`,
+    
       title: "Total Commission",
       color: "#4285F4",
     },
     {
       id: 5,
-      amount: `${stats?.totalReferrals || 0}`,
+      amount: `${totalReferrals}`,
       title: "Total Referrals",
       color: "#E9734E",
     },
   ];
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      const { data } = await api.get("/dashboard/get-stats");
-      setStats(data);
-      setData(data);
-    };
+//   useEffect(() => {
+//     const fetchStats = async () => {
+//       try {
+//         const { data } = await api.get("/dashboard/get-stats");
+//         setStats(data);
+//         setData(data);
+//       } catch (error) {
+//         setError('Failed to fetch stats');
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
 
-    fetchStats();
-  }, []);
+//     fetchStats();
+//   }, [setData]);
+
+
+// console.log("stats",stats)
+
 
   return (
     <Container>

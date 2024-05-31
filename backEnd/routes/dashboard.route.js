@@ -4,6 +4,6 @@ import { getStats } from "../controllers/dashboard.controller.js";
 
 const router = express.Router();
 
-router.get("/get-stats", getStats);
+router.get("/get-stats",auth,getStats);
 
 export { router as DashboardRoute };
