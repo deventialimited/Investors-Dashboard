@@ -82,7 +82,6 @@ export const getRefs = async (req, res) => {
     // Calculate total commission
     const totalCommission = receipts.reduce((acc, receipt) => acc + receipt.commission, 0);
 
-    console.log("totalCommission", totalCommission, referrals);
 
     // Return referrals and total commission
     return res.status(200).json({ referrals, totalCommission });
@@ -149,5 +148,33 @@ export const getAllactivities = async (req, res) => {
   } catch (error) {
     console.log("Error getting referrals: ", error);
     return res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+
+
+export const getTotalCommission = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const totalCommission = await Receipt.aggregate([
+      {
+        $match: { user: mongoose.Types.ObjectId(userId) },
+      },
+      {
+        $group: {
+          _id: null,
+          totalCommission: { $sum: '$commission' },
+        },
+      },
+    ]);
+
+    const totalCommissionAmount = totalCommission[0]?.totalCommission || 0;
+
+    return res.status(200).json({ totalCommission: totalCommissionAmount });
+  } catch (error) {
+    console.log('Error calculating total commission: ', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };

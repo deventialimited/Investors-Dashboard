@@ -100,13 +100,14 @@ const ChartSection = () => {
 
   const fetchChartData = async () => {
     try {
-      const { data } = await api.get("/dashboard/get-chart-data");
+      const { data } = await api.get("/dashboard/get-stats");
       setChartData(data.dataPoints);
     } catch (error) {
       console.log(error);
     }
   };
 
+  console.log("chartdata")
   useEffect(() => {
     fetchChartData();
   }, []);

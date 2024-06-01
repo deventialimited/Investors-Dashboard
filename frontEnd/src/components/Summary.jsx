@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { api } from "../axios/axios";
+
 const Section = styled.div`
   display: flex;
   justify-content: center;
@@ -61,16 +61,22 @@ const Summary = () => {
   useEffect(() => {
     const fetchSummaryData = async () => {
       try {
-        const { data } = await api.get("/referral/getAllactivities", {
+        const activitiesData = await api.get("/referral/getAllactivities", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        const commissionData = await api.get(`/receipt/TotalCommission/${user._id}`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         });
 
         setSummaryData({
-          totalReferrals: data.totalReferrals,
-          pendingReferrals: data.pendingReferrals,
-          totalCommission: data.totalCommission,
+          totalReferrals: activitiesData.data.totalReferrals,
+          pendingReferrals: activitiesData.data.pendingReferrals,
+          totalCommission: commissionData.data.totalCommission,
         });
       } catch (error) {
         console.log("Error fetching summary data:", error);
@@ -78,11 +84,10 @@ const Summary = () => {
     };
 
     fetchSummaryData();
-  }, [user.token]);
+  }, [user.token, user._id]);
 
   const { totalReferrals, pendingReferrals, totalCommission } = summaryData;
 
-  console.log("totalReferrals",totalReferrals)
   return (
     <Section>
       <Text>Summary for This Month</Text>
@@ -103,7 +108,7 @@ const Summary = () => {
       <InfoArea>
         <Info>
           <Title>Total Commission</Title>
-          <Amount>${totalCommission}</Amount>
+          <Amount>₱{totalCommission}</Amount>
         </Info>
         <Underline />
       </InfoArea>

@@ -4,8 +4,7 @@ import LeftLogo from "../assets/LeftLogo.png";
 import RightLogo from "../assets/RightLogo.png";
 import CenterLogo from "../assets/centerlogo.png";
 import UserProfile from "../assets/Userprofile.jpeg";
-import { mobile } from "../responsive";
-import { tablet } from "../responsive";
+import { mobile, tablet } from "../responsive";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiCustomerService2Line } from "react-icons/ri";
@@ -309,7 +308,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     dispatch(logout());
   };
-
+console.log("user",user.avatar)
   return (
     <Container>
       <Section>
@@ -336,9 +335,9 @@ const Navbar = () => {
           </IconSection>
           <ProfileSection to={"/profile"}>
             <Underline></Underline>
-            <Profile src={UserProfile} />
+            <Profile src={user.avatar} alt="User Avatar" />
             <InfoSection>
-              <Name>{user ? <>{user.fullName}</> : <>Thomas</>}</Name>
+              <Name>{user ? <>{user.userName}</> : <>Thomas</>}</Name>
               <User>User</User>
             </InfoSection>
             <ExitIcon onClick={handleLogout} />
@@ -354,7 +353,7 @@ const Navbar = () => {
                 <CloseIcon onClick={handleExit} />
               </TopLogoIcon>
               <ProfileSec to={"/profile"}>
-                <Img src={UserProfile} />
+                <Img src={user?.avatar} />
                 <Span>My Profile</Span>
               </ProfileSec>
               <IconSec>

@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdVisibilityOff } from "react-icons/md";
 import { mobile } from "../responsive";
 import { tablet } from "../responsive";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,7 +32,6 @@ const Section = styled.div`
   padding: 3rem 0rem;
   border-radius: 24px;
   ${tablet({ height: "450px", width: "70%", gap: "1rem" })}
-
   ${mobile({ height: "250px", width: "70%", gap: "1rem" })}
 `;
 const TitleSection = styled.div``;
@@ -41,7 +40,6 @@ const Title = styled.div`
   font-weight: 500;
   text-align: center;
   color: #333333;
-
   ${mobile({ fontSize: "15px" })}
 `;
 const LinkSection = styled.div`
@@ -63,7 +61,6 @@ const Icon = styled(FcGoogle)`
   height: 24px;
   width: 24px;
   ${mobile({ height: "18px", width: "18px" })}
-
   ${mobile({ height: "15px", width: "15px" })}
 `;
 
@@ -152,7 +149,6 @@ const Button = styled.div`
     transition: all 0.3s ease-in-out;
   }
   ${tablet({ width: "30%", height: "40px", fontSize: "14px" })}
-
   ${mobile({ width: "25%", height: "30px", fontSize: "10px" })}
 `;
 const AccountText = styled.div`
@@ -179,7 +175,7 @@ const Signup = styled.a`
   color: #0059c2;
 `;
 
-const login = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -197,6 +193,10 @@ const login = () => {
         password: formData.password,
       });
 
+      // Store user ID in local storage
+      localStorage.setItem('userId', data.user._id);
+
+      // Dispatch user data to the store
       dispatch(setUser({ ...data.user, token: data.token }));
       toast.success(data.message);
       navigate("/");
@@ -214,8 +214,6 @@ const login = () => {
     }));
   };
 
-  console.log(formData);
-
   return (
     <Container>
       <ToastContainer />
@@ -224,13 +222,13 @@ const login = () => {
           <Title>Login</Title>
         </TitleSection>
         <LinkSection>
-          <Icon></Icon>
+          <Icon />
           <Text>Continue with Google</Text>
         </LinkSection>
         <SectionTwo>
-          <Underline></Underline>
+          <Underline />
           <Or>OR</Or>
-          <Underline></Underline>
+          <Underline />
         </SectionTwo>
         <FieldContainer>
           <FieldSection>
@@ -256,7 +254,7 @@ const login = () => {
                 onChange={handleChange}
                 name="password"
                 autoComplete="off"
-                type={showPass ? `text` : `password`}
+                type={showPass ? "text" : "password"}
                 id="password"
               />
               <FieldIcon onClick={() => setShowPass(!showPass)} />
@@ -274,4 +272,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

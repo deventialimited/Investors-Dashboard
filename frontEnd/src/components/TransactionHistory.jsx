@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-
-import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md"; 
+import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { api } from "../axios/axios";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,6 +100,7 @@ const ButtonSection = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 `;
 
 const LeftIcon = styled(MdKeyboardDoubleArrowLeft)`
@@ -116,45 +117,18 @@ const Text = styled.div`
   font-size: 12.52px;
 `;
 
-const Box = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  background-color: #e6e6e6;
-  padding: 5px 15px;
-  border-radius: 42px;
-`;
-
-const BoxOne = styled.a`
-  color: #ee1d52;
-  text-decoration: none;
-`;
-
-const BoxTwo = styled.a`
-  color: #ee1d52;
-  text-decoration: none;
-`;
-
-const BoxThree = styled.a`
-  color: #ee1d52;
-  text-decoration: none;
-`;
-
-const BoxFour = styled.a`
-  color: #ee1d52;
-  text-decoration: none;
-`;
-
 const TransactionHistory = () => {
   const [receipts, setReceipts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [receiptsPerPage] = useState(10);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchReceipts = async () => {
       try {
-        const { data } = await api.get("/receipt/getReceiptsByUserId", {
+        const { data } = await api.get(`/receipt/getReceiptsByUserId`, {
           headers: {
-            Authorization: `Bearer ${user.token}`, // Replace with your actual authentication token
+            Authorization: `Bearer ${user.token}`,
           },
         });
         setReceipts(data.receipts);
@@ -164,10 +138,24 @@ const TransactionHistory = () => {
     };
 
     fetchReceipts();
-  }, []);
+  }, [user.token]);
 
+  // Logic for displaying current receipts
+  const indexOfLastReceipt = currentPage * receiptsPerPage;
+  const indexOfFirstReceipt = indexOfLastReceipt - receiptsPerPage;
+  const currentReceipts = receipts.slice(indexOfFirstReceipt, indexOfLastReceipt);
 
-  console.log("receipts",receipts)
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(receipts.length / receiptsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <Container>
@@ -180,7 +168,7 @@ const TransactionHistory = () => {
             <Title>Commission Earned</Title>
             <Title>Sender Name</Title>
           </TitleArea>
-          {receipts.map((item) => (
+          {currentReceipts.map((item) => (
             <ReferenceSection key={item._id}>
               <Bottom>
                 <Link>{item.referenceNo}</Link>
@@ -199,18 +187,14 @@ const TransactionHistory = () => {
         </Section>
       </FormArea>
       <Pages>
-        <ButtonSection>
+        <ButtonSection onClick={handlePreviousPage} disabled={currentPage === 1}>
           <LeftIcon />
           <Text>Previous</Text>
         </ButtonSection>
-        <Box>
-          <BoxOne>1</BoxOne>
-          <BoxTwo>2</BoxTwo>
-          <BoxThree>3</BoxThree>
-          <BoxFour>4</BoxFour>
-        </Box>
-        <ButtonSection>
-          <Text>Next</Text> <RightIcon />
+        <Text>Page {currentPage} of {Math.ceil(receipts.length / receiptsPerPage)}</Text>
+        <ButtonSection onClick={handleNextPage} disabled={currentPage === Math.ceil(receipts.length / receiptsPerPage)}>
+          <Text>Next</Text>
+          <RightIcon />
         </ButtonSection>
       </Pages>
     </Container>

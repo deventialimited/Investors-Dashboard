@@ -30,6 +30,9 @@ const userSchema = new Schema(
     referredBy: {
       type: String
     },
+    avatar: {
+      type: String,
+    },
     payoutMethod: {
       type: String,
     },

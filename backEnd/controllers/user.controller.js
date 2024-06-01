@@ -10,6 +10,7 @@ import { upload } from "../utils/cloudinay.util.js";
 import Referral from "../models/Referral.model.js";
 import { sendMail } from "../services/email.js";
 
+
 export const signup = async (req, res, next) => {
   const validation = Joi.object({
     userName: Joi.string().required(),
@@ -127,6 +128,7 @@ export const login = async (req, res, next) => {
   }
 };
 
+
 export const updateUser = async (req, res, next) => {
   const validation = Joi.object({
     email: Joi.string().email().optional(),
@@ -159,52 +161,37 @@ export const updateUser = async (req, res, next) => {
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "user not found." });
+      return res.status(404).json({ message: "User not found." });
     }
 
-    if (email) {
-      user.email = email;
-    }
+    if (email) user.email = email;
+    if (userName) user.userName = userName;
+    if (country) user.country = country;
+    if (payoutMethod) user.payoutMethod = payoutMethod;
+    if (bankDetails) user.bankAccountDetails = bankDetails;
 
-    if (userName) {
-      user.userName = userName;
-    }
-
-    if (country) {
-      user.country = country;
+    if (req.file) {
+      const avatar = await upload(req.file); // Upload the avatar and get the URL
+      user.avatar = avatar;
     }
 
     if (currentPassword && newPassword) {
-      const isPasswordCorrect = validatePassword(
-        currentPassword,
-        user.password
-      );
+      const isPasswordCorrect = validatePassword(currentPassword, user.password);
       if (!isPasswordCorrect)
-        return res
-          .status(400)
-          .json({ message: "current password is not correct" });
+        return res.status(400).json({ message: "Current password is not correct" });
+
       const salt = await generateSalt();
       const newPassHash = await generatePassword(newPassword, salt);
       user.password = newPassHash;
     }
 
-    if (payoutMethod) {
-      user.payoutMethod = payoutMethod;
-    }
-
-    if (bankDetails) {
-      user.bankAccountDetails = bankDetails;
-    }
-
     await user.save();
-
+console.log("user",user)
     return res.status(200).json({ message: "User updated successfully", user });
   } catch (error) {
-    console.log("error updating the user: ", error);
+    console.log("Error updating the user: ", error);
     return res.status(500).json({ error });
   }
 };
-
-
 
 
