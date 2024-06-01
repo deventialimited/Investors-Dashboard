@@ -180,6 +180,7 @@ const Profile = () => {
     country: user.country || "",
     payoutMethod: user.payoutMethod || "",
     bankDetails: user.bankAccountDetails || "",
+    bankName: user.bankName || "", // Added bankName field
     avatar: null,
   });
 
@@ -199,6 +200,7 @@ const Profile = () => {
     formDataObj.append("newPassword", formData.newPassword);
     formDataObj.append("payoutMethod", formData.payoutMethod);
     formDataObj.append("bankDetails", formData.bankDetails);
+    formDataObj.append("bankName", formData.bankName); // Append bankName to form data
     if (formData.avatar) {
       formDataObj.append("avatar", formData.avatar);
     }
@@ -356,7 +358,20 @@ const Profile = () => {
               <DropdownItem value="Bank Transfer">Bank Transfer</DropdownItem>
             </DropdownContent>
             <InfoBox>
-              <Name>You can receive earnings in personal bank account</Name>
+              <Name>You can receive earnings in a personal bank account</Name>
+              <NameField>
+                <Field
+                  type="text"
+                  name="bankName"
+                  value={formData.bankName}
+                  onChange={handleChange}
+                  required
+                  autoComplete="off"
+                  placeholder="Bank Name"
+                />
+              </NameField>
+            </InfoBox>
+            <InfoBox>
               <NameField>
                 <Field
                   type="text"
@@ -365,7 +380,7 @@ const Profile = () => {
                   onChange={handleChange}
                   required
                   autoComplete="off"
-                  placeholder="Bank Account Details"
+                  placeholder="Bank Account Number"
                 />
               </NameField>
             </InfoBox>

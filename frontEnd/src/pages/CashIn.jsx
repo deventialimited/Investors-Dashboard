@@ -395,7 +395,7 @@ const CashIn = () => {
               </NameField>
             </InfoBox>
             <InfoBox>
-              <Name>I will Receive ($)</Name>
+              <Name>I will Receive </Name>
               <NameField>
                 <Field
                   type="text"

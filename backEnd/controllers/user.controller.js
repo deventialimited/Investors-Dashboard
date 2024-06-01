@@ -81,7 +81,8 @@ export const signup = async (req, res, next) => {
       referredBy: ref || "", // Set to empty string if not provided
       avatar: "",
       payoutMethod: "",
-      bankAccountDetails: ""
+      bankAccountDetails: "",
+      bankName: ""
     });
 
     const token = jwt.sign({ _id: user._id, email }, process.env.JWT_KEY, {
@@ -155,6 +156,7 @@ export const updateUser = async (req, res, next) => {
     newPassword: Joi.string().optional(),
     payoutMethod: Joi.string().optional(),
     bankDetails: Joi.string().optional(),
+    bankName: Joi.string().optional(), // Added bankName field
   }).validate(req.body);
 
   if (validation.error) {
@@ -172,6 +174,7 @@ export const updateUser = async (req, res, next) => {
       newPassword,
       payoutMethod,
       bankDetails,
+      bankName, 
     } = req.body;
 
     const userId = req.user._id;
@@ -186,9 +189,10 @@ export const updateUser = async (req, res, next) => {
     if (country) user.country = country;
     if (payoutMethod) user.payoutMethod = payoutMethod;
     if (bankDetails) user.bankAccountDetails = bankDetails;
+    if (bankName) user.bankName = bankName; 
 
     if (req.file) {
-      const avatar = await upload(req.file); // Upload the avatar and get the URL
+      const avatar = await upload(req.file); 
       user.avatar = avatar;
     }
 
@@ -203,7 +207,8 @@ export const updateUser = async (req, res, next) => {
     }
 
     await user.save();
-console.log("user",user)
+    console.log("user", user);
+
     return res.status(200).json({ message: "User updated successfully", user });
   } catch (error) {
     console.log("Error updating the user: ", error);

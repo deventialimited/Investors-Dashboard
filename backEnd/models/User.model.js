@@ -30,6 +30,7 @@ const userSchema = new Schema(
     },
     referredBy: {
       type: String,
+      default: "",
     },
     avatar: {
       type: String,
@@ -43,6 +44,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    bankName: {
+      type: String,
+      default: "",
+    }
   },
   {
     toJSON: {

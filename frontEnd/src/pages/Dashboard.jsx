@@ -96,7 +96,6 @@ const Dashboard = () => {
           <Text>Dashboard</Text>
           <ButtonArea>
             <Button href="/cashin">
-              <IconOne></IconOne>
               <Span>Cash-In</Span>
             </Button>
             <Button>
