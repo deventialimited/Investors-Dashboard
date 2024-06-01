@@ -358,7 +358,7 @@ const Profile = () => {
               <DropdownItem value="Bank Transfer">Bank Transfer</DropdownItem>
             </DropdownContent>
             <InfoBox>
-              <Name>You can receive earnings in a personal bank account</Name>
+              <Name> Bank Name</Name>
               <NameField>
                 <Field
                   type="text"
