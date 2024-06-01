@@ -1,11 +1,11 @@
-import mongoose from "mongoose"
-const { Schema } = mongoose
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
     userName: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
@@ -14,7 +14,7 @@ const userSchema = new Schema(
     },
     fullName: {
       type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
@@ -22,34 +22,38 @@ const userSchema = new Schema(
     },
     country: {
       type: String,
+      default: "",
     },
     rewardEarned: {
       type: Number,
       default: 0,
     },
     referredBy: {
-      type: String
+      type: String,
     },
     avatar: {
       type: String,
+      default: "",
     },
     payoutMethod: {
       type: String,
+      default: "",
     },
     bankAccountDetails: {
-      type: String
-    }
+      type: String,
+      default: "",
+    },
   },
   {
     toJSON: {
       transform(doc, ret) {
-        delete ret.__v
+        delete ret.__v;
       },
     },
     timestamps: true,
   }
-)
+);
 
-const User = mongoose.model("User", userSchema)
+const User = mongoose.model("User", userSchema);
 
-export default User
+export default User;

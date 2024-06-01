@@ -76,15 +76,19 @@ export const signup = async (req, res, next) => {
       email,
       fullName,
       password: hashPassword,
-      country,
-      referredBy,
+      country: country || "", // Set to empty string if not provided
+      rewardEarned: 0,
+      referredBy: ref || "", // Set to empty string if not provided
+      avatar: "",
+      payoutMethod: "",
+      bankAccountDetails: ""
     });
 
     const token = jwt.sign({ _id: user._id, email }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
 
-    await sendMail(user.fullName)
+    // await sendMail(user.fullName)
 
     return res.status(200).json({ user, token, message: "signup successfull" });
   } catch (error) {
@@ -92,6 +96,9 @@ export const signup = async (req, res, next) => {
     return res.status(500).json({ error: error });
   }
 };
+
+
+
 
 export const login = async (req, res, next) => {
   const validation = Joi.object({
@@ -108,22 +115,32 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
-    if (user === null) {
-      return res.status(404).json({ message: "user not found." });
+    // Normalize email to lowercase and trim spaces
+    const normalizedEmail = email.trim().toLowerCase();
+
+    console.log('Searching for user with email:', normalizedEmail);
+    
+    const user = await User.findOne({ email: normalizedEmail });
+
+    if (!user) {
+      console.log('User not found for email:', normalizedEmail);
+      return res.status(404).json({ message: "User not found." });
     }
 
     const isPasswordCorrect = validatePassword(password, user.password);
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "wrong credentials" });
+      return res.status(400).json({ message: "Wrong credentials" });
     }
-    const token = jwt.sign({ _id: user._id, email }, process.env.JWT_KEY, {
+
+    const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
 
-    return res.status(200).json({ user, token, message: "login successfull" });
+    console.log('Login successful for user:', user._id);
+
+    return res.status(200).json({ user, token, message: "Login successful" });
   } catch (error) {
-    console.log("login error: ", error);
+    console.log("Login error: ", error);
     return res.status(500).json({ error: error });
   }
 };
