@@ -285,6 +285,7 @@ const Profile = () => {
               <DropdownItem value="Philippines">Philippines</DropdownItem>
               <DropdownItem value="Japan">Japan</DropdownItem>
               <DropdownItem value="UAE">UAE</DropdownItem>
+              <DropdownItem value="USA">USA</DropdownItem>
             </DropdownContent>
             <InfoBox>
               <Name>Upload Avatar</Name>
