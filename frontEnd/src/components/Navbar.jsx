@@ -319,7 +319,7 @@ console.log("user",user.avatar)
         </LogoSection>
 
         <Secc>
-          <IconSection>
+          {/* <IconSection>
             <Icons>
               <IconOne />
             </Icons>
@@ -332,7 +332,7 @@ console.log("user",user.avatar)
             <Icons>
               <IconFour />
             </Icons>
-          </IconSection>
+          </IconSection> */}
           <ProfileSection to={"/profile"}>
             <Underline></Underline>
             <Profile src={user.avatar} alt="User Avatar" />
